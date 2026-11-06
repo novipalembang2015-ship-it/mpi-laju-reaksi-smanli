@@ -1,0 +1,1506 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Laju Reaksi · SMA Negeri 5 Palembang</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0B1F3A;
+    --blue:#1651D6;
+    --blue-deep:#0E3AA8;
+    --blue-light:#5B8CFF;
+    --ice:#EFF4FF;
+    --white:#FFFFFF;
+    --ink:#0F1A2B;
+    --muted:#5B6B85;
+    --line:#D7E2FA;
+    --success:#0E7A4E;
+    --success-bg:#E5F6EE;
+    --warn:#9A4B00;
+    --warn-bg:#FFF1DF;
+    --radius:18px;
+    --radius-sm:10px;
+    box-sizing:border-box;
+    padding-bottom:env(safe-area-inset-bottom,0px);
+    color-scheme:light;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth; scroll-padding-top:calc(env(safe-area-inset-top,0px) + 70px);}
+  body{
+    margin:0;
+    font-family:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    color:var(--ink);
+    background:var(--ice);
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.display{font-family:'Fraunces',Georgia,serif;}
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;}
+  }
+ 
+  /* ===== Top navigation ===== */
+  body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-inset-top,0px); background:var(--navy); z-index:60;}
+  #topbar{
+    position:sticky; top:env(safe-area-inset-top,0px); z-index:50;
+    background:var(--navy);
+    color:var(--white);
+    display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
+    padding:14px 26px;
+    box-shadow:0 6px 18px rgba(11,31,58,0.18);
+  }
+  .brand{display:flex; align-items:center; gap:12px; cursor:pointer;}
+  .brand-mark{
+    width:38px; height:38px; border-radius:50%;
+    flex:none; background:var(--blue); color:#fff;
+    display:flex; align-items:center; justify-content:center; font-size:19px;
+    box-shadow:0 0 0 2px rgba(255,255,255,0.35);
+  }
+  .brand-text{line-height:1.15;}
+  .brand-text .school{font-size:11.5px; letter-spacing:0.04em; color:#B9CBFA;}
+  .brand-text .subject{font-size:15px; font-weight:700;}
+  #navlinks{display:flex; gap:4px; flex-wrap:wrap;}
+  .navbtn{
+    background:transparent; border:1px solid transparent; color:#CFDCFA;
+    font-family:'Inter',sans-serif; font-size:13.5px; font-weight:600;
+    padding:8px 12px; border-radius:999px; cursor:pointer; transition:all .25s ease;
+    white-space:nowrap;
+  }
+  .navbtn:hover{background:rgba(255,255,255,0.08); color:#fff;}
+  .navbtn.current{background:var(--white); color:var(--navy);}
+ 
+  /* ===== Page shell ===== */
+  .page{display:none; animation:fadein .5s ease;}
+  .page.active{display:block;}
+  @keyframes fadein{from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);}}
+  .wrap{max-width:980px; margin:0 auto; padding:46px 24px 90px;}
+  .wrap.narrow{max-width:840px;}
+ 
+  .eyebrow{color:var(--blue); font-weight:700; font-size:13px;}
+  .lead{color:var(--muted); font-size:16.5px; line-height:1.65; max-width:640px;}
+  .card{
+    background:var(--white); border:1px solid var(--line); border-radius:var(--radius);
+    padding:28px; box-shadow:0 12px 30px -18px rgba(11,31,58,0.25);
+  }
+ 
+  /* ===== HOME / HERO ===== */
+  #page-home .hero{
+    position:relative; overflow:hidden;
+    background:linear-gradient(160deg, var(--navy) 0%, var(--blue-deep) 55%, var(--blue) 100%);
+    border-radius:26px; color:#fff; padding:64px 40px; margin-top:8px;
+    min-height:420px; display:flex; flex-direction:column; justify-content:center;
+  }
+  #collision-canvas{position:absolute; inset:0; width:100%; height:100%; opacity:0.9;}
+  .hero-inner{position:relative; z-index:2; max-width:640px;}
+  .hero-kicker{
+    display:inline-flex; align-items:center; gap:8px; font-size:13px; font-weight:600;
+    color:#DCE8FF; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.18);
+    padding:6px 14px; border-radius:999px; margin-bottom:22px;
+  }
+  #page-home h1{font-size:44px; line-height:1.08; margin:0 0 18px; font-weight:600; letter-spacing:-0.01em;}
+  @media (max-width:600px){ #page-home h1{font-size:30px;} #page-home .hero{padding:44px 24px;} }
+  #page-home .hero p{color:#D7E4FF; font-size:16.5px; line-height:1.65; margin:0 0 30px; max-width:520px;}
+  .hero-cta{display:flex; gap:12px; flex-wrap:wrap;}
+ 
+  .btn{
+    font-family:'Inter',sans-serif; font-weight:700; font-size:14.5px; cursor:pointer;
+    border-radius:999px; padding:13px 24px; border:none; transition:transform .2s ease, box-shadow .2s ease;
+    display:inline-flex; align-items:center; gap:8px;
+  }
+  .btn-primary{background:#fff; color:var(--navy);}
+  .btn-primary:hover{transform:translateY(-2px); box-shadow:0 10px 22px -8px rgba(0,0,0,0.4);}
+  .btn-ghost{background:transparent; color:#fff; border:1.5px solid rgba(255,255,255,0.45);}
+  .btn-ghost:hover{background:rgba(255,255,255,0.1);}
+  .btn-solid{background:var(--blue); color:#fff;}
+  .btn-solid:hover{transform:translateY(-2px); box-shadow:0 10px 20px -10px rgba(22,81,214,0.6);}
+  .btn-outline{background:#fff; color:var(--blue); border:1.5px solid var(--line);}
+  .btn-outline:hover{border-color:var(--blue);}
+  .btn:disabled{opacity:0.45; cursor:not-allowed; transform:none !important; box-shadow:none !important;}
+ 
+  .menu-grid{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:36px;
+  }
+  @media (max-width:760px){ .menu-grid{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:520px){ .menu-grid{grid-template-columns:1fr;} }
+  .menu-card{
+    background:#fff; border:1px solid var(--line); border-radius:16px; padding:22px 20px;
+    cursor:pointer; text-align:left; transition:all .25s ease; position:relative; overflow:hidden;
+    font-family:inherit; color:inherit;
+  }
+  .menu-card:hover{border-color:var(--blue); transform:translateY(-4px); box-shadow:0 16px 30px -18px rgba(22,81,214,0.45);}
+  .menu-card .ic{
+    width:42px; height:42px; border-radius:12px; background:var(--ice); display:flex; align-items:center; justify-content:center;
+    margin-bottom:14px; color:var(--blue);
+  }
+  .menu-card h3{margin:0 0 6px; font-size:17px; font-weight:600; color:var(--navy);}
+  .menu-card p{margin:0; font-size:13.5px; color:var(--muted); line-height:1.5;}
+ 
+  .section-title{display:flex; align-items:baseline; justify-content:space-between; gap:16px; margin-bottom:8px; flex-wrap:wrap;}
+  .section-title h2{margin:0; font-size:30px; font-weight:600; color:var(--navy);}
+  .meta-pill{font-size:12.5px; color:var(--blue); background:var(--ice); border:1px solid var(--line); padding:4px 12px; border-radius:999px; font-weight:700;}
+ 
+  /* ===== Tujuan ===== */
+  .tujuan-list{list-style:none; margin:30px 0 0; padding:0; display:flex; flex-direction:column; gap:14px;}
+  .tujuan-list li{
+    display:flex; gap:16px; background:#fff; border:1px solid var(--line); border-radius:14px; padding:18px 20px;
+  }
+  .tujuan-num{
+    flex:none; width:34px; height:34px; border-radius:50%; background:var(--blue); color:#fff;
+    display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px;
+  }
+  .tujuan-list p{margin:0; font-size:15px; line-height:1.55; color:var(--ink);}
+ 
+  /* ===== Materi ===== */
+  .materi-stepper{display:flex; gap:8px; margin:28px 0 0; overflow-x:auto; padding-bottom:6px;}
+  .materi-step{
+    flex:1; min-width:130px; background:#fff; border:1.5px solid var(--line); border-radius:12px;
+    padding:12px 14px; cursor:pointer; transition:all .2s ease;
+  }
+  .materi-step.done{border-color:var(--blue-light);}
+  .materi-step.active{border-color:var(--blue); background:var(--navy); color:#fff;}
+  .materi-step .num{font-size:11px; font-weight:700; color:var(--blue); letter-spacing:.03em;}
+  .materi-step.active .num{color:#BFD3FF;}
+  .materi-step .lbl{font-size:12.5px; font-weight:600; margin-top:4px; line-height:1.3;}
+ 
+  .materi-body{margin-top:22px; animation:fadein .4s ease;}
+  .materi-body h3{font-size:24px; margin:0 0 6px; color:var(--navy); font-weight:600;}
+  .materi-body .sub{color:var(--blue); font-weight:700; font-size:12.5px; margin-bottom:18px;}
+  .materi-body p{line-height:1.75; font-size:15.5px; color:#25324A; margin:0 0 16px;}
+  .materi-body ul, .materi-body ol{line-height:1.75; font-size:15.5px; color:#25324A; padding-left:22px;}
+  .materi-body li{margin-bottom:8px;}
+  .formula-box{
+    background:var(--ice); border-left:4px solid var(--blue); border-radius:8px;
+    padding:16px 20px; margin:18px 0; font-size:15.5px; color:var(--navy); font-weight:600;
+  }
+  .info-box{
+    background:var(--warn-bg); border-left:4px solid var(--warn); border-radius:8px;
+    padding:14px 18px; margin:18px 0; font-size:14.5px; color:#5C3200;
+  }
+  .materi-nav-buttons{display:flex; justify-content:space-between; margin-top:30px; gap:10px;}
+ 
+  /* diagram */
+  .diagram-wrap{background:#fff; border:1px solid var(--line); border-radius:14px; padding:18px; margin:18px 0;}
+  .diagram-wrap svg{width:100%; height:auto; display:block;}
+  .diagram-cap{font-size:12.5px; color:var(--muted); text-align:center; margin-top:8px;}
+ 
+  /* factor cards */
+  .factor-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:14px; margin-top:6px;}
+  @media (max-width:640px){.factor-grid{grid-template-columns:1fr;}}
+  .factor-card{background:var(--ice); border-radius:12px; padding:16px 18px;}
+  .factor-card h4{margin:0 0 6px; font-size:15px; color:var(--navy);}
+  .factor-card p{margin:0; font-size:13.5px; color:var(--muted); line-height:1.55;}
+ 
+  /* ===== Simulasi ===== */
+  .sim-frame-wrap{border-radius:16px; overflow:hidden; border:1px solid var(--line); background:#fff; box-shadow:0 12px 30px -18px rgba(11,31,58,0.25);}
+  .sim-frame-wrap iframe{width:100%; height:560px; border:none; display:block;}
+  @media (max-width:640px){.sim-frame-wrap iframe{height:400px;}}
+  .sim-tabs{display:flex; gap:8px; margin:24px 0 14px; flex-wrap:wrap;}
+  .sim-tab{
+    background:#fff; border:1.5px solid var(--line); border-radius:999px; padding:9px 18px;
+    font-size:13.5px; font-weight:600; cursor:pointer; color:var(--muted); font-family:inherit;
+  }
+  .sim-tab.active{background:var(--blue); color:#fff; border-color:var(--blue);}
+  .video-grid{display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:18px;}
+  @media (max-width:700px){.video-grid{grid-template-columns:1fr;}}
+  .video-card iframe{width:100%; height:220px; border-radius:14px; border:1px solid var(--line);}
+  .video-card p{font-size:13px; color:var(--muted); margin:8px 4px 0;}
+  .video-wrap{border-radius:16px; overflow:hidden; background:#000; border:1px solid var(--line); box-shadow:0 12px 30px -18px rgba(11,31,58,0.35); margin-top:22px;}
+  .video-wrap video{width:100%; height:auto; display:block; max-height:70vh; background:#000;}
+  .bank-card{display:flex; gap:28px; align-items:center; background:#fff; border:1px solid var(--line); border-radius:18px; padding:26px; margin-top:22px; box-shadow:0 12px 30px -18px rgba(11,31,58,0.25);}
+  .bank-qr{width:220px; height:220px; flex:none; border:1px solid var(--line); border-radius:12px; image-rendering:pixelated; background:#fff;}
+  .bank-info h3{margin:0 0 8px; font-size:22px; color:var(--navy);}
+  .bank-info p{margin:0 0 16px; color:var(--muted); font-size:14.5px; line-height:1.6;}
+  .bank-info .bank-url{margin:12px 0 0; font-size:13px; font-weight:600; color:var(--blue); word-break:break-all;}
+  @media (max-width:640px){.bank-card{flex-direction:column; text-align:center;} .bank-qr{width:200px; height:200px;}}
+  .link-grid{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:14px;}
+  @media (max-width:700px){.link-grid{grid-template-columns:1fr;}}
+  .link-card{display:flex; gap:14px; align-items:flex-start; background:#fff; border:1px solid var(--line); border-radius:16px; padding:20px; text-decoration:none; color:inherit; transition:all .25s ease;}
+  .link-card:hover{border-color:var(--blue); transform:translateY(-3px); box-shadow:0 16px 30px -18px rgba(22,81,214,0.45);}
+  .link-card .ic{flex:none; width:44px; height:44px; border-radius:12px; background:var(--ice); display:flex; align-items:center; justify-content:center; font-size:20px;}
+  .link-card h4{margin:0 0 4px; font-size:16px; color:var(--navy);}
+  .link-card p{margin:0 0 8px; font-size:13.5px; color:var(--muted); line-height:1.5;}
+  .link-card .go{font-size:13px; font-weight:700; color:var(--blue);}
+ 
+  /* ===== Quiz shared ===== */
+  .q-progress{display:flex; gap:6px; margin:26px 0 6px;}
+  .q-dot{flex:1; height:6px; border-radius:4px; background:var(--line);}
+  .q-dot.done{background:var(--blue);}
+  .q-dot.current{background:var(--navy);}
+  .q-card{background:#fff; border:1px solid var(--line); border-radius:18px; padding:30px; margin-top:20px;}
+  .q-level{display:inline-block; font-size:11.5px; font-weight:700; color:var(--blue); background:var(--ice); padding:4px 11px; border-radius:999px; margin-bottom:14px;}
+  .q-stimulus{background:var(--ice); border-radius:12px; padding:16px 18px; font-size:14px; color:#25324A; line-height:1.65; margin-bottom:18px; overflow-x:auto;}
+  .q-stimulus table{width:100%; border-collapse:collapse; font-size:13.5px; margin-top:8px;}
+  .q-stimulus th, .q-stimulus td{border:1px solid var(--line); padding:6px 10px; text-align:center;}
+  .q-stimulus th{background:#fff;}
+  .q-text{font-size:17px; font-weight:600; color:var(--navy); margin-bottom:18px; line-height:1.5;}
+  .opt{
+    display:flex; align-items:flex-start; gap:12px; padding:13px 16px; border:1.5px solid var(--line);
+    border-radius:12px; margin-bottom:10px; cursor:pointer; transition:all .2s ease; font-size:14.5px; line-height:1.5;
+  }
+  .opt:hover{border-color:var(--blue-light); background:#F7FAFF;}
+  .opt input{margin-top:3px; accent-color:var(--blue); flex:none;}
+  .opt.correct-mark{border-color:var(--success); background:var(--success-bg);}
+  .opt.wrong-mark{border-color:#C23B3B; background:#FDECEC;}
+  .cat-row{display:flex; align-items:center; justify-content:space-between; gap:14px; padding:12px 0; border-bottom:1px dashed var(--line); font-size:14.5px;}
+  .cat-row:last-child{border-bottom:none;}
+  .cat-row span{flex:1; line-height:1.5;}
+  .cat-row select{
+    font-family:'Inter',sans-serif; font-size:13.5px; font-weight:600; padding:8px 12px; border-radius:8px;
+    border:1.5px solid var(--line); background:#fff; color:var(--navy); flex:none; min-width:120px;
+  }
+  .feedback{border-radius:12px; padding:16px 18px; margin-top:18px; font-size:14.5px; line-height:1.6; display:none;}
+  .feedback.show{display:block; animation:fadein .35s ease;}
+  .feedback.ok{background:var(--success-bg); color:#0E5D3D; border:1px solid #BEE7D2;}
+  .feedback.bad{background:var(--warn-bg); color:#7A3D00; border:1px solid #F3D7AC;}
+  .feedback b{display:block; margin-bottom:6px; font-size:15px;}
+  .q-actions{display:flex; justify-content:space-between; margin-top:22px; gap:10px; flex-wrap:wrap;}
+ 
+  /* ===== Asesmen ===== */
+  .id-card{background:#fff; border:1px solid var(--line); border-radius:16px; padding:26px; margin-top:22px;}
+  .id-row{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:14px;}
+  .id-row-3{grid-template-columns:1fr 1fr 1fr;}
+  @media (max-width:700px){.id-row, .id-row-3{grid-template-columns:1fr;}}
+  .field label{display:block; font-size:12.5px; font-weight:700; color:var(--navy); margin-bottom:6px;}
+  .field input, .field select{
+    width:100%; font-family:'Inter',sans-serif; font-size:15px; padding:12px 14px; border-radius:10px;
+    border:1.5px solid var(--line); background:#F9FBFF; color:var(--ink);
+  }
+  .field input:focus, .field select:focus{outline:none; border-color:var(--blue); background:#fff;}
+  .field textarea{
+    width:100%; font-family:'Inter',sans-serif; font-size:14.5px; padding:12px 14px; border-radius:10px;
+    border:1.5px solid var(--line); background:#F9FBFF; color:var(--ink); resize:vertical; line-height:1.5;
+  }
+  .field textarea:focus{outline:none; border-color:var(--blue); background:#fff;}
+  .reflek-card{background:#fff; border:1px solid var(--line); border-radius:14px; padding:18px 20px; margin-bottom:14px;}
+  .reflek-head{display:flex; justify-content:space-between; align-items:flex-start; gap:12px; margin-bottom:10px;}
+  .reflek-head div:first-child b{display:block; color:var(--navy); font-size:15px;}
+  .reflek-head div:first-child span{font-size:12.5px; color:var(--muted);}
+  .reflek-star{color:#E0A100; font-size:13px; white-space:nowrap;}
+  .reflek-card p{margin:0 0 8px; font-size:13.5px; color:#25324A; line-height:1.55;}
+  .reflek-card p b{color:var(--navy);}
+  .reflek-time{font-size:11.5px; color:var(--muted); text-align:right; margin-top:4px;}
+  .as-item{background:#fff; border:1px solid var(--line); border-radius:16px; padding:24px; margin-bottom:18px;}
+  .as-item .q-text{font-size:16px;}
+  .as-result-badge{display:inline-flex; align-items:center; gap:8px; font-weight:700; font-size:13.5px; padding:6px 14px; border-radius:999px; margin-top:14px;}
+  .as-result-badge.ok{background:var(--success-bg); color:var(--success);}
+  .as-result-badge.bad{background:var(--warn-bg); color:var(--warn);}
+  .summary-card{
+    background:linear-gradient(135deg, var(--navy), var(--blue-deep)); color:#fff; border-radius:20px;
+    padding:34px; text-align:center; margin-top:10px;
+  }
+  .summary-card .score{font-family:'Fraunces',Georgia,serif; font-size:56px; font-weight:600; margin:6px 0;}
+  .summary-card p{color:#D7E4FF; margin:0;}
+  .level-breakdown{display:flex; gap:14px; justify-content:center; margin-top:20px; flex-wrap:wrap;}
+  .level-breakdown div{background:rgba(255,255,255,0.1); border-radius:12px; padding:12px 20px; min-width:110px;}
+  .level-breakdown div b{display:block; font-size:20px;}
+  .level-breakdown div span{font-size:12px; color:#CBDBFF;}
+ 
+  /* ===== Rangkuman ===== */
+  .rangkuman-item{background:#fff; border:1px solid var(--line); border-radius:16px; padding:22px 24px; margin-bottom:14px;}
+  .rangkuman-item h4{margin:0 0 8px; color:var(--navy); font-size:16.5px;}
+  .rangkuman-item p{margin:0; color:var(--muted); font-size:14.5px; line-height:1.65;}
+  .quote-block{
+    border-left:4px solid var(--blue); background:var(--ice); border-radius:10px; padding:20px 24px;
+    font-family:'Fraunces',Georgia,serif; font-size:19px; color:var(--navy); margin:26px 0; line-height:1.5;
+  }
+ 
+  footer{text-align:center; padding:30px 30px calc(30px + env(safe-area-inset-bottom,0px)); color:var(--muted); font-size:12.5px; border-top:1px solid var(--line); background:#fff;}
+</style>
+</head>
+<body>
+ 
+<div id="topbar">
+  <div class="brand" onclick="showPage('home')">
+    <div class="brand-mark">⚗</div>
+    <div class="brand-text">
+      <div class="school">SMA Negeri 5 Palembang</div>
+      <div class="subject">Laju Reaksi · Kimia XI</div>
+    </div>
+  </div>
+  <div id="navlinks">
+    <button class="navbtn" data-p="tujuan" onclick="showPage('tujuan')">Tujuan</button>
+    <button class="navbtn" data-p="video" onclick="showPage('video')">Video Pengantar</button>
+    <button class="navbtn" data-p="awal" onclick="showPage('awal')">Asesmen Awal</button>
+    <button class="navbtn" data-p="materi" onclick="showPage('materi')">Materi</button>
+    <button class="navbtn" data-p="simulasi" onclick="showPage('simulasi')">Simulasi</button>
+    <button class="navbtn" data-p="game" onclick="showPage('game')">Game Edukasi</button>
+    <button class="navbtn" data-p="latihan" onclick="showPage('latihan')">Latihan</button>
+    <button class="navbtn" data-p="asesmen" onclick="showPage('asesmen')">Asesmen</button>
+    <button class="navbtn" data-p="banksoal" onclick="showPage('banksoal')">Bank Soal</button>
+    <button class="navbtn" data-p="tka" onclick="showPage('tka')">Pembahasan TKA</button>
+    <button class="navbtn" data-p="rangkuman" onclick="showPage('rangkuman')">Rangkuman</button>
+    <button class="navbtn" data-p="refleksi" onclick="showPage('refleksi')">Refleksi</button>
+  </div>
+</div>
+ 
+<!-- ============ HOME ============ -->
+<section class="page active" id="page-home">
+  <div class="wrap">
+    <div class="hero">
+      <canvas id="collision-canvas"></canvas>
+      <div class="hero-inner">
+        <div class="hero-kicker">⚗ Modul Interaktif · Kimia Kelas XI</div>
+        <h1>Mengapa reaksi ada yang secepat kembang api,<br>dan ada yang selambat karat besi?</h1>
+        <p>Jelajahi konsep laju reaksi — mulai dari teori tumbukan, faktor-faktor yang memengaruhinya, hingga penerapannya di industri — lewat materi, simulasi, dan latihan yang bisa kamu coba sendiri.</p>
+        <div class="hero-cta">
+          <button class="btn btn-primary" onclick="showPage('materi')">Mulai belajar</button>
+          <button class="btn btn-ghost" onclick="showPage('tujuan')">Lihat tujuan pembelajaran</button>
+        </div>
+      </div>
+    </div>
+ 
+    <div class="menu-grid">
+      <button class="menu-card" onclick="showPage('tujuan')">
+        <div class="ic">🎯</div>
+        <h3>Tujuan Pembelajaran</h3>
+        <p>Capaian yang akan kamu kuasai setelah menyelesaikan modul ini.</p>
+      </button>
+      <button class="menu-card" onclick="showPage('video')">
+        <div class="ic">🎬</div>
+        <h3>Video Pengantar Materi</h3>
+        <p>Tonton video pembuka sebelum mempelajari materi laju reaksi.</p>
+      </button>
+      <button class="menu-card" onclick="showPage('awal')">
+        <div class="ic">📋</div>
+        <h3>Asesmen Awal</h3>
+        <p>Cek kesiapan dan pemahaman awalmu sebelum belajar materi.</p>
+      </button>
+      <button class="menu-card" onclick="showPage('materi')">
+        <div class="ic">📘</div>
+        <h3>Materi Pembelajaran</h3>
+        <p>Lima bagian materi, dari konsep dasar sampai penerapannya.</p>
+      </button>
+      <button class="menu-card" onclick="showPage('simulasi')">
+        <div class="ic">🧪</div>
+        <h3>Simulasi · Animasi · Video</h3>
+        <p>Amati tumbukan partikel secara langsung lewat simulasi PhET.</p>
+      </button>
+      <button class="menu-card" onclick="showPage('game')">
+        <div class="ic">🎮</div>
+        <h3>Game Edukasi</h3>
+        <p>Belajar laju reaksi sambil bermain lewat game interaktif.</p>
+      </button>
+      <button class="menu-card" onclick="showPage('latihan')">
+        <div class="ic">✏️</div>
+        <h3>Latihan Soal</h3>
+        <p>5 soal berjenjang untuk mengecek pemahamanmu secara mandiri.</p>
+      </button>
+      <button class="menu-card" onclick="showPage('tka')">
+        <div class="ic">🎥</div>
+        <h3>Pembahasan Soal TKA</h3>
+        <p>Video pembahasan soal TKA untuk memperdalam pemahamanmu.</p>
+      </button>
+      <button class="menu-card" onclick="showPage('banksoal')">
+        <div class="ic">🗃️</div>
+        <h3>BANK SOAL</h3>
+        <p>Kumpulan soal latihan Kimia lewat tautan dan kode QR.</p>
+      </button>
+      <button class="menu-card" onclick="showPage('asesmen')">
+        <div class="ic">📝</div>
+        <h3>Asesmen Sumatif</h3>
+        <p>15 soal bertingkat (L1–L3) dengan stimulus data, gambar, dan kasus.</p>
+      </button>
+      <button class="menu-card" onclick="showPage('rangkuman')">
+        <div class="ic">🗂</div>
+        <h3>Rangkuman</h3>
+        <p>Inti sari seluruh materi laju reaksi dalam satu halaman.</p>
+      </button>
+      <button class="menu-card" onclick="showPage('refleksi')">
+        <div class="ic">💬</div>
+        <h3>Refleksi</h3>
+        <p>Tuliskan refleksi belajarmu — dapat dilihat oleh semua pengguna.</p>
+      </button>
+    </div>
+  </div>
+</section>
+ 
+<!-- ============ TUJUAN ============ -->
+<section class="page" id="page-tujuan">
+  <div class="wrap narrow">
+    <div class="eyebrow">Tujuan Pembelajaran</div>
+    <h2 style="font-size:32px; color:var(--navy); margin:8px 0 10px;">Setelah mempelajari modul ini, kamu diharapkan mampu:</h2>
+    <p class="lead">Capaian belajar berikut menjadi acuan pada setiap materi, simulasi, dan soal di dalam modul ini.</p>
+    <ul class="tujuan-list">
+      <li><div class="tujuan-num">1</div><p>Menjelaskan pengertian laju reaksi dan cara menyatakannya berdasarkan perubahan konsentrasi pereaksi atau produk terhadap waktu.</p></li>
+      <li><div class="tujuan-num">2</div><p>Menjelaskan teori tumbukan serta peran energi aktivasi dan orientasi tumbukan dalam menentukan terjadinya suatu reaksi.</p></li>
+      <li><div class="tujuan-num">3</div><p>Menganalisis pengaruh konsentrasi, luas permukaan bidang sentuh, suhu, dan katalis terhadap laju reaksi melalui data percobaan.</p></li>
+      <li><div class="tujuan-num">4</div><p>Menentukan orde reaksi dan menuliskan persamaan hukum laju reaksi berdasarkan data eksperimen.</p></li>
+      <li><div class="tujuan-num">5</div><p>Mengaitkan konsep laju reaksi dengan fenomena sehari-hari dan penerapannya dalam industri.</p></li>
+    </ul>
+    <div style="margin-top:30px; display:flex; gap:12px;">
+      <button class="btn btn-solid" onclick="showPage('materi')">Lanjut ke Materi →</button>
+    </div>
+  </div>
+</section>
+ 
+<!-- ============ VIDEO PENGANTAR ============ -->
+<section class="page" id="page-video">
+  <div class="wrap narrow">
+    <div class="section-title"><h2>Video Pengantar Materi</h2><span class="meta-pill">± 1 menit</span></div>
+    <p class="lead">Tonton video berikut sebagai pengantar sebelum mempelajari materi Laju Reaksi.</p>
+    <div class="video-wrap">
+      <video controls playsinline preload="metadata" poster="video-pengantar-materi.jpg" src="video-pengantar-materi.mp4">Peramban kamu tidak mendukung pemutar video.</video>
+    </div>
+    <div style="margin-top:30px; display:flex; gap:12px; flex-wrap:wrap;">
+      <button class="btn btn-outline" onclick="showPage('tujuan')">← Tujuan Pembelajaran</button>
+      <button class="btn btn-solid" onclick="showPage('awal')">Lanjut ke Asesmen Awal →</button>
+    </div>
+  </div>
+</section>
+ 
+<!-- ============ ASESMEN AWAL ============ -->
+<section class="page" id="page-awal">
+  <div class="wrap narrow">
+    <div class="section-title"><h2>Asesmen Awal</h2><span class="meta-pill">Diagnostik</span></div>
+    <p class="lead">Kerjakan asesmen awal berikut untuk mengetahui kesiapan dan pemahaman awalmu sebelum mempelajari materi Laju Reaksi. Tautan terbuka di tab baru.</p>
+    <div class="link-grid" style="grid-template-columns:1fr;">
+      <a class="link-card" href="https://asesmenawallaju-reaksi.vercel.app/" target="_blank" rel="noopener noreferrer">
+        <div class="ic">📋</div>
+        <div><h4>Asesmen Awal Laju Reaksi</h4><p>Asesmen diagnostik sebelum memulai pembelajaran.</p><span class="go">Buka asesmen ↗</span></div>
+      </a>
+    </div>
+    <div style="margin-top:30px; display:flex; gap:12px; flex-wrap:wrap;">
+      <button class="btn btn-outline" onclick="showPage('video')">← Video Pengantar</button>
+      <button class="btn btn-solid" onclick="showPage('materi')">Lanjut ke Materi →</button>
+    </div>
+  </div>
+</section>
+ 
+<!-- ============ MATERI ============ -->
+<section class="page" id="page-materi">
+  <div class="wrap">
+    <div class="section-title">
+      <h2>Materi Pembelajaran</h2>
+      <span class="meta-pill">5 bagian</span>
+    </div>
+    <p class="lead">Pelajari secara berurutan, atau klik langsung bagian yang ingin kamu tinjau ulang.</p>
+ 
+    <div class="materi-stepper" id="materi-stepper"></div>
+    <div class="materi-body" id="materi-body"></div>
+  </div>
+</section>
+ 
+<!-- ============ SIMULASI ============ -->
+<section class="page" id="page-simulasi">
+  <div class="wrap">
+    <div class="section-title"><h2>Simulasi · Animasi · Video</h2></div>
+    <p class="lead">Amati langsung bagaimana suhu, konsentrasi, dan energi memengaruhi tumbukan partikel dan laju reaksi.</p>
+ 
+    <h3 style="color:var(--navy); margin-top:30px;">Simulasi PhET</h3>
+    <div class="link-grid">
+      <a class="link-card" href="https://phet.colorado.edu/en/simulations/reactions-and-rates" target="_blank" rel="noopener noreferrer">
+        <div class="ic">🧪</div>
+        <div><h4>Reactions &amp; Rates (PhET)</h4><p>Tab Single Collision &amp; Many Collisions: amati tumbukan, orientasi, suhu, konsentrasi, katalis, dan energi aktivasi — sesuai Materi 2 dan 3.</p><span class="go">Buka simulasi ↗</span></div>
+      </a>
+      <a class="link-card" href="https://phet.colorado.edu/en/search?q=kinetics" target="_blank" rel="noopener noreferrer">
+        <div class="ic">📋</div>
+        <div><h4>Aktivitas Kinetika PhET</h4><p>Kumpulan lembar kegiatan dan panduan guru untuk simulasi Reactions &amp; Rates, termasuk “What Factors Influence the Rate of a Reaction?”.</p><span class="go">Buka daftar aktivitas ↗</span></div>
+      </a>
+    </div>
+    <p style="font-size:13px; color:var(--muted); margin-top:10px;">Simulasi disediakan oleh PhET Interactive Simulations, University of Colorado Boulder. Tautan terbuka di tab baru.</p>
+ 
+    <h3 style="color:var(--navy); margin-top:40px;">Video Pendukung</h3>
+    <div class="link-grid">
+      <a class="link-card" href="https://www.youtube.com/results?search_query=teori+tumbukan+energi+aktivasi+laju+reaksi+kimia+kelas+11" target="_blank" rel="noopener noreferrer">
+        <div class="ic">▶️</div>
+        <div><h4>Video: Teori Tumbukan &amp; Energi Aktivasi</h4><p>Kumpulan video penjelasan teori tumbukan, tumbukan efektif, dan energi aktivasi (Materi 2).</p><span class="go">Cari di YouTube ↗</span></div>
+      </a>
+      <a class="link-card" href="https://www.youtube.com/results?search_query=faktor+faktor+yang+mempengaruhi+laju+reaksi+kimia+kelas+11" target="_blank" rel="noopener noreferrer">
+        <div class="ic">▶️</div>
+        <div><h4>Video: Faktor-Faktor Laju Reaksi</h4><p>Kumpulan video percobaan pengaruh konsentrasi, luas permukaan, suhu, dan katalis (Materi 3).</p><span class="go">Cari di YouTube ↗</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+ 
+<!-- ============ GAME EDUKASI ============ -->
+<section class="page" id="page-game">
+  <div class="wrap narrow">
+    <div class="section-title"><h2>Game Edukasi</h2><span class="meta-pill">Belajar sambil bermain</span></div>
+    <p class="lead">Uji pemahamanmu tentang Laju Reaksi lewat game edukasi berikut. Tautan terbuka di tab baru.</p>
+    <div class="link-grid" style="grid-template-columns:1fr;">
+      <a class="link-card" href="https://canva.link/pv2adr4qivdg02a" target="_blank" rel="noopener noreferrer">
+        <div class="ic">🎮</div>
+        <div><h4>Game Edukasi Laju Reaksi</h4><p>Mainkan game untuk memperkuat pemahaman konsep laju reaksi.</p><span class="go">Mainkan game ↗</span></div>
+      </a>
+    </div>
+    <div style="margin-top:30px; display:flex; gap:12px; flex-wrap:wrap;">
+      <button class="btn btn-outline" onclick="showPage('simulasi')">← Simulasi</button>
+      <button class="btn btn-solid" onclick="showPage('latihan')">Lanjut ke Latihan Soal →</button>
+    </div>
+  </div>
+</section>
+ 
+<!-- ============ LATIHAN ============ -->
+<section class="page" id="page-latihan">
+  <div class="wrap narrow">
+    <div class="section-title"><h2>Latihan Soal</h2><span class="meta-pill" id="latihan-progress-label">1 / 5</span></div>
+    <p class="lead">Lima soal dengan kompleksitas meningkat (taksonomi SOLO). Jawab, lalu periksa pembahasannya.</p>
+    <div class="q-progress" id="latihan-progress"></div>
+    <div id="latihan-container"></div>
+  </div>
+</section>
+ 
+<!-- ============ PEMBAHASAN SOAL TKA ============ -->
+<section class="page" id="page-tka">
+  <div class="wrap narrow">
+    <div class="section-title"><h2>Pembahasan Soal TKA</h2><span class="meta-pill">2 video</span></div>
+    <p class="lead">Tonton video pembahasan soal TKA berikut untuk memperdalam pemahamanmu. Tautan terbuka di tab baru.</p>
+    <div class="link-grid">
+      <a class="link-card" href="https://youtu.be/Mw87WXZ9UPU" target="_blank" rel="noopener noreferrer">
+        <div class="ic">▶️</div>
+        <div><h4>Pembahasan Soal TKA · Video 1</h4><p>Video pembahasan soal TKA.</p><span class="go">Tonton di YouTube ↗</span></div>
+      </a>
+      <a class="link-card" href="https://youtu.be/jSYOeHIoROQ" target="_blank" rel="noopener noreferrer">
+        <div class="ic">▶️</div>
+        <div><h4>Pembahasan Soal TKA · Video 2</h4><p>Video pembahasan soal TKA.</p><span class="go">Tonton di YouTube ↗</span></div>
+      </a>
+    </div>
+    <div style="margin-top:30px; display:flex; gap:12px; flex-wrap:wrap;">
+      <button class="btn btn-outline" onclick="showPage('latihan')">← Latihan Soal</button>
+      <button class="btn btn-solid" onclick="showPage('asesmen')">Kerjakan Asesmen Sumatif →</button>
+    </div>
+  </div>
+</section>
+ 
+<!-- ============ BANK SOAL ============ -->
+<section class="page" id="page-banksoal">
+  <div class="wrap narrow">
+    <div class="section-title"><h2>BANK SOAL</h2><span class="meta-pill">Kimia SMAN 5 Palembang</span></div>
+    <p class="lead">Kumpulan soal latihan Kimia. Klik tombol tautan atau pindai kode QR berikut untuk membukanya.</p>
+    <div class="bank-card">
+      <img src="qr-bank-soal.png" alt="Kode QR menuju Bank Soal Kimia" class="bank-qr">
+      <div class="bank-info">
+        <h3>Bank Soal Kimia</h3>
+        <p>Pindai kode QR dengan kamera ponsel, atau buka langsung melalui tautan di bawah ini.</p>
+        <a class="btn btn-solid" href="https://bit.ly/BANKSOALKIMIASMANLI" target="_blank" rel="noopener noreferrer" style="text-decoration:none;">Buka Bank Soal ↗</a>
+        <p class="bank-url">bit.ly/BANKSOALKIMIASMANLI</p>
+      </div>
+    </div>
+    <div style="margin-top:30px; display:flex; gap:12px; flex-wrap:wrap;">
+      <button class="btn btn-outline" onclick="showPage('latihan')">← Latihan Soal</button>
+      <button class="btn btn-solid" onclick="showPage('asesmen')">Kerjakan Asesmen Sumatif →</button>
+    </div>
+  </div>
+</section>
+ 
+<!-- ============ ASESMEN ============ -->
+<section class="page" id="page-asesmen">
+  <div class="wrap narrow">
+    <div class="section-title"><h2>Asesmen Sumatif</h2><span class="meta-pill">15 soal · L1–L3</span></div>
+    <p class="lead">Isi identitas terlebih dahulu, kerjakan seluruh soal, lalu kirim jawabanmu untuk melihat hasil dan mengunduh rekapnya.</p>
+ 
+    <div class="id-card" id="identity-card">
+      <div class="eyebrow" style="margin-bottom:4px;">Identitas Peserta</div>
+      <div class="id-row id-row-3">
+        <div class="field">
+          <label>Nama Lengkap</label>
+          <input type="text" id="inp-nama" placeholder="Ketik nama lengkapmu">
+        </div>
+        <div class="field">
+          <label>Kelas</label>
+          <select id="inp-kelas">
+            <option value="">Pilih kelas…</option>
+            <option value="X">X</option>
+            <option value="XI">XI</option>
+            <option value="XII">XII</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Nama Sekolah</label>
+          <select id="inp-sekolah" onchange="toggleSekolahLain('inp-sekolah-lain', this)">
+            <option value="">Pilih sekolah…</option>
+            <option value="SMA Negeri 5 Palembang">SMA Negeri 5 Palembang</option>
+            <option value="Lain-lain">Lain-lain</option>
+          </select>
+          <input type="text" id="inp-sekolah-lain" placeholder="Tulis nama sekolahmu" style="display:none; margin-top:8px;">
+        </div>
+      </div>
+      <button class="btn btn-solid" style="margin-top:20px;" onclick="startAsesmen()">Mulai Asesmen →</button>
+      <p id="identity-warning" style="color:#C23B3B; font-size:13px; display:none; margin-top:10px;">Nama, kelas, dan nama sekolah wajib diisi sebelum memulai.</p>
+    </div>
+ 
+    <div id="asesmen-form-wrap" style="display:none;">
+      <div id="asesmen-items"></div>
+      <button class="btn btn-solid" style="width:100%; justify-content:center; padding:16px;" onclick="submitAsesmen()">Kirim Jawaban</button>
+    </div>
+ 
+    <div id="asesmen-result" style="display:none;"></div>
+  </div>
+</section>
+ 
+<!-- ============ RANGKUMAN ============ -->
+<section class="page" id="page-rangkuman">
+  <div class="wrap narrow">
+    <div class="section-title"><h2>Rangkuman</h2></div>
+    <div class="quote-block">“Laju reaksi bergantung pada seberapa sering — dan seberapa efektif — partikel pereaksi saling bertumbukan.”</div>
+ 
+    <div class="rangkuman-item">
+      <h4>1. Konsep Dasar Laju Reaksi</h4>
+      <p>Laju reaksi menyatakan perubahan konsentrasi pereaksi (berkurang) atau produk (bertambah) tiap satuan waktu, dituliskan v = −Δ[R]/Δt = +Δ[P]/Δt, dengan satuan umum mol/(L·s).</p>
+    </div>
+    <div class="rangkuman-item">
+      <h4>2. Teori Tumbukan</h4>
+      <p>Reaksi terjadi bila partikel bertumbukan dengan orientasi yang tepat dan energi minimal sebesar energi aktivasi (Ea). Tumbukan yang memenuhi kedua syarat ini disebut tumbukan efektif.</p>
+    </div>
+    <div class="rangkuman-item">
+      <h4>3. Faktor-Faktor yang Memengaruhi Laju Reaksi</h4>
+      <p>Konsentrasi, luas permukaan bidang sentuh, suhu, dan katalis semuanya memengaruhi laju reaksi dengan mengubah frekuensi tumbukan efektif atau menurunkan energi aktivasi.</p>
+    </div>
+    <div class="rangkuman-item">
+      <h4>4. Hukum Laju dan Orde Reaksi</h4>
+      <p>Hubungan laju dengan konsentrasi dituliskan sebagai v = k[A]^m[B]^n. Orde reaksi (m, n) ditentukan dari data eksperimen, bukan dari koefisien persamaan reaksi.</p>
+    </div>
+    <div class="rangkuman-item">
+      <h4>5. Penerapan dalam Kehidupan</h4>
+      <p>Prinsip laju reaksi diterapkan mulai dari pengawetan makanan, pematangan buah, hingga penggunaan katalis dalam industri seperti proses Haber-Bosch.</p>
+    </div>
+ 
+    <div style="margin-top:30px; display:flex; gap:12px; flex-wrap:wrap;">
+      <button class="btn btn-outline" onclick="showPage('latihan')">Kembali berlatih</button>
+      <button class="btn btn-solid" onclick="showPage('asesmen')">Kerjakan Asesmen Sumatif</button>
+    </div>
+  </div>
+</section>
+ 
+<!-- ============ REFLEKSI ============ -->
+<section class="page" id="page-refleksi">
+  <div class="wrap narrow">
+    <div class="section-title"><h2>Refleksi Pembelajaran</h2><span class="meta-pill" id="refleksi-mode-badge">💻 Mode: perangkat/sesi ini saja</span></div>
+    <p class="lead">Tuliskan refleksimu tentang materi Laju Reaksi. Isian di papan ini dapat dilihat oleh semua yang mengisi.</p>
+ 
+    <div class="id-card">
+      <div class="eyebrow" style="margin-bottom:4px;">Identitas</div>
+      <div class="id-row id-row-3">
+        <div class="field">
+          <label>Nama Lengkap</label>
+          <input type="text" id="ref-nama" placeholder="Ketik nama lengkapmu">
+        </div>
+        <div class="field">
+          <label>Kelas</label>
+          <select id="ref-kelas">
+            <option value="">Pilih kelas…</option>
+            <option value="X">X</option>
+            <option value="XI">XI</option>
+            <option value="XII">XII</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Nama Sekolah</label>
+          <select id="ref-sekolah" onchange="toggleSekolahLain('ref-sekolah-lain', this)">
+            <option value="">Pilih sekolah…</option>
+            <option value="SMA Negeri 5 Palembang">SMA Negeri 5 Palembang</option>
+            <option value="Lain-lain">Lain-lain</option>
+          </select>
+          <input type="text" id="ref-sekolah-lain" placeholder="Tulis nama sekolahmu" style="display:none; margin-top:8px;">
+        </div>
+      </div>
+ 
+      <div class="field" style="margin-top:18px;">
+        <label>Bagian yang paling kamu pahami dari materi Laju Reaksi</label>
+        <textarea id="ref-paham" rows="2" placeholder="Tulis di sini…"></textarea>
+      </div>
+      <div class="field" style="margin-top:14px;">
+        <label>Bagian yang masih membingungkan</label>
+        <textarea id="ref-bingung" rows="2" placeholder="Tulis di sini…"></textarea>
+      </div>
+      <div class="field" style="margin-top:14px;">
+        <label>Rencana belajarmu selanjutnya</label>
+        <textarea id="ref-rencana" rows="2" placeholder="Tulis di sini…"></textarea>
+      </div>
+      <div class="field" style="margin-top:14px; max-width:220px;">
+        <label>Seberapa yakin kamu dengan pemahamanmu?</label>
+        <select id="ref-bintang">
+          <option value="5">★★★★★ Sangat yakin</option>
+          <option value="4">★★★★☆ Yakin</option>
+          <option value="3">★★★☆☆ Cukup yakin</option>
+          <option value="2">★★☆☆☆ Kurang yakin</option>
+          <option value="1">★☆☆☆☆ Belum yakin</option>
+        </select>
+      </div>
+ 
+      <button class="btn btn-solid" style="margin-top:20px;" onclick="submitRefleksi()">Kirim Refleksi</button>
+      <p id="refleksi-warning" style="color:#C23B3B; font-size:13px; display:none; margin-top:10px;">Semua kolom wajib diisi sebelum mengirim.</p>
+      <p id="refleksi-success" style="color:var(--success); font-weight:700; font-size:13.5px; display:none; margin-top:10px;">✅ Refleksi terkirim. Terima kasih!</p>
+    </div>
+ 
+    <h3 style="color:var(--navy); margin-top:36px;">Papan Refleksi</h3>
+    <div id="refleksi-list"></div>
+    <p style="font-size:12.5px; color:var(--muted); margin-top:14px;">Catatan: papan ini tampil untuk semua pengguna bila fitur penyimpanan bersama sudah diaktifkan oleh pengelola modul. Jika belum, refleksimu tetap tersimpan pada sesi ini dan otomatis terunduh sebagai CSV supaya dapat digabungkan guru.</p>
+  </div>
+</section>
+ 
+<footer>Kimia SMA · Kelas XI · Materi Laju Reaksi &nbsp;|&nbsp; Disusun oleh Novitalia Ablinda Sari, S.T., M.Pd &nbsp;|&nbsp; SMA Negeri 5 Palembang</footer>
+ 
+<script>
+/* ===================== NAVIGATION ===================== */
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  document.querySelectorAll('.navbtn').forEach(b=>b.classList.toggle('current', b.dataset.p===id));
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+ 
+/* ===================== HERO COLLISION ANIMATION ===================== */
+(function(){
+  const canvas = document.getElementById('collision-canvas');
+  const ctx = canvas.getContext('2d');
+  let w,h,particles=[];
+  function resize(){
+    w = canvas.parentElement.clientWidth; h = canvas.parentElement.clientHeight;
+    canvas.width=w; canvas.height=h;
+  }
+  function initParticles(){
+    particles=[];
+    const n = w<600?10:18;
+    for(let i=0;i<n;i++){
+      particles.push({
+        x:Math.random()*w, y:Math.random()*h,
+        vx:(Math.random()-0.5)*1.2, vy:(Math.random()-0.5)*1.2,
+        r: 4+Math.random()*5,
+        c: Math.random()>0.5? 'rgba(120,170,255,0.85)':'rgba(255,255,255,0.55)'
+      });
+    }
+  }
+  function step(){
+    ctx.clearRect(0,0,w,h);
+    for(const p of particles){
+      p.x+=p.vx; p.y+=p.vy;
+      if(p.x<0||p.x>w) p.vx*=-1;
+      if(p.y<0||p.y>h) p.vy*=-1;
+    }
+    for(let i=0;i<particles.length;i++){
+      for(let j=i+1;j<particles.length;j++){
+        const a=particles[i], b=particles[j];
+        const dx=a.x-b.x, dy=a.y-b.y, d=Math.sqrt(dx*dx+dy*dy);
+        if(d<140){
+          ctx.strokeStyle='rgba(150,190,255,'+(0.18*(1-d/140))+')';
+          ctx.lineWidth=1;
+          ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
+        }
+        if(d < a.r+b.r){
+          const nx=dx/d, ny=dy/d;
+          a.vx += nx*0.04; a.vy += ny*0.04;
+          b.vx -= nx*0.04; b.vy -= ny*0.04;
+        }
+      }
+    }
+    for(const p of particles){
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle=p.c; ctx.fill();
+    }
+    requestAnimationFrame(step);
+  }
+  resize(); initParticles(); step();
+  window.addEventListener('resize', ()=>{resize(); initParticles();});
+})();
+ 
+/* ===================== MATERI DATA ===================== */
+const materi = [
+  {
+    label:"Konsep Dasar Laju Reaksi",
+    html:`
+      <div class="sub">MATERI 1 DARI 5</div>
+      <h3>Konsep Dasar Laju Reaksi</h3>
+      <p>Dalam kehidupan sehari-hari, sebagian reaksi kimia berlangsung sangat cepat (misalnya ledakan kembang api), sedangkan sebagian lain berlangsung sangat lambat (misalnya perkaratan besi). Untuk membandingkan “cepat” atau “lambat” ini secara kuantitatif, ilmu kimia menggunakan besaran yang disebut <b>laju reaksi</b>.</p>
+      <p><b>Laju reaksi</b> adalah perubahan konsentrasi pereaksi (reaktan) atau produk tiap satuan waktu. Karena reaktan berkurang dan produk bertambah selama reaksi berlangsung, laju reaksi dapat dinyatakan dari salah satu zat tersebut.</p>
+      <div class="formula-box">v = − Δ[R] / Δt &nbsp;=&nbsp; + Δ[P] / Δt</div>
+      <p>dengan [R] = konsentrasi pereaksi, [P] = konsentrasi produk (mol/L), dan Δt = selang waktu (s). Satuan laju reaksi umumnya <b>mol L⁻¹ s⁻¹</b>. Tanda negatif pada pereaksi menunjukkan konsentrasinya berkurang, sedangkan produk bertambah sehingga bertanda positif.</p>
+      <div class="diagram-wrap">
+        <svg viewBox="0 0 560 220" xmlns="http://www.w3.org/2000/svg">
+          <line x1="50" y1="180" x2="530" y2="180" stroke="#5B6B85" stroke-width="1.5"/>
+          <line x1="50" y1="180" x2="50" y2="20" stroke="#5B6B85" stroke-width="1.5"/>
+          <text x="290" y="210" font-size="12" fill="#5B6B85" text-anchor="middle" font-family="Inter">Waktu (t)</text>
+          <text x="20" y="100" font-size="12" fill="#5B6B85" text-anchor="middle" font-family="Inter" transform="rotate(-90 20 100)">Konsentrasi</text>
+          <path d="M60 40 C 150 60, 220 140, 520 170" fill="none" stroke="#C23B3B" stroke-width="3"/>
+          <path d="M60 165 C 150 145, 220 70, 520 35" fill="none" stroke="#1651D6" stroke-width="3"/>
+          <text x="380" y="150" font-size="12" fill="#C23B3B" font-family="Inter" font-weight="600">[Pereaksi]</text>
+          <text x="380" y="55" font-size="12" fill="#1651D6" font-family="Inter" font-weight="600">[Produk]</text>
+        </svg>
+        <div class="diagram-cap">Grafik umum konsentrasi pereaksi (turun) dan produk (naik) terhadap waktu.</div>
+      </div>
+      <p>Laju rata-rata dihitung pada selang waktu tertentu, sedangkan <b>laju sesaat</b> adalah laju pada satu titik waktu tertentu — diperoleh dari kemiringan garis singgung kurva konsentrasi–waktu pada titik tersebut.</p>
+    `
+  },
+  {
+    label:"Teori Tumbukan",
+    html:`
+      <div class="sub">MATERI 2 DARI 5</div>
+      <h3>Teori Tumbukan (Collision Theory)</h3>
+      <p>Mengapa tidak semua tumbukan antarpartikel menghasilkan reaksi? <b>Teori tumbukan</b> menjelaskan bahwa suatu reaksi kimia hanya terjadi jika partikel-partikel pereaksi bertumbukan dengan memenuhi dua syarat sekaligus:</p>
+      <ul>
+        <li><b>Orientasi tumbukan yang tepat</b> — posisi partikel saat bertumbukan harus memungkinkan pembentukan ikatan baru.</li>
+        <li><b>Energi tumbukan mencukupi</b> — energi kinetik partikel saat bertumbukan harus sama dengan atau melebihi <b>energi aktivasi (Ea)</b>, yaitu energi minimum yang diperlukan agar tumbukan menghasilkan reaksi.</li>
+      </ul>
+      <p>Tumbukan yang memenuhi kedua syarat di atas disebut <b>tumbukan efektif</b>. Semakin banyak tumbukan efektif per satuan waktu, semakin besar laju reaksinya.</p>
+      <div class="diagram-wrap">
+        <svg viewBox="0 0 560 240" xmlns="http://www.w3.org/2000/svg">
+          <line x1="50" y1="200" x2="530" y2="200" stroke="#5B6B85" stroke-width="1.5"/>
+          <line x1="50" y1="200" x2="50" y2="20" stroke="#5B6B85" stroke-width="1.5"/>
+          <text x="290" y="228" font-size="12" fill="#5B6B85" text-anchor="middle" font-family="Inter">Jalannya reaksi</text>
+          <text x="20" y="110" font-size="12" fill="#5B6B85" text-anchor="middle" font-family="Inter" transform="rotate(-90 20 110)">Energi potensial</text>
+          <path d="M70 160 Q 220 30, 300 30 Q 380 30, 500 120" fill="none" stroke="#1651D6" stroke-width="3"/>
+          <line x1="220" y1="30" x2="220" y2="160" stroke="#9A4B00" stroke-width="1.5" stroke-dasharray="4 3"/>
+          <text x="228" y="95" font-size="12" fill="#9A4B00" font-family="Inter" font-weight="600">Ea</text>
+          <text x="75" y="180" font-size="11" fill="#25324A" font-family="Inter">Reaktan</text>
+          <text x="470" y="140" font-size="11" fill="#25324A" font-family="Inter">Produk</text>
+        </svg>
+        <div class="diagram-cap">Diagram energi potensial: puncak kurva menunjukkan keadaan transisi, Ea adalah selisih energi puncak dengan energi reaktan awal.</div>
+      </div>
+      <div class="info-box">Semakin tinggi Ea suatu reaksi, semakin sedikit partikel yang memiliki energi cukup untuk bereaksi pada suhu tertentu — sehingga reaksi berlangsung lebih lambat.</div>
+    `
+  },
+  {
+    label:"Faktor-Faktor yang Memengaruhi",
+    html:`
+      <div class="sub">MATERI 3 DARI 5</div>
+      <h3>Faktor-Faktor yang Memengaruhi Laju Reaksi</h3>
+      <p>Berdasarkan teori tumbukan, setiap faktor yang meningkatkan frekuensi atau efektivitas tumbukan akan mempercepat laju reaksi. Empat faktor utama yang dipelajari di jenjang SMA adalah:</p>
+      <div class="factor-grid">
+        <div class="factor-card">
+          <h4>🔵 Konsentrasi</h4>
+          <p>Semakin besar konsentrasi pereaksi, semakin rapat partikel dalam larutan sehingga peluang tumbukan antarpartikel makin sering terjadi.</p>
+        </div>
+        <div class="factor-card">
+          <h4>🔵 Luas Permukaan Bidang Sentuh</h4>
+          <p>Padatan yang dihaluskan (serbuk) memiliki luas permukaan lebih besar daripada bongkahan, sehingga lebih banyak partikel yang saling bersentuhan dan bereaksi.</p>
+        </div>
+        <div class="factor-card">
+          <h4>🔵 Suhu</h4>
+          <p>Kenaikan suhu meningkatkan energi kinetik partikel, sehingga lebih banyak partikel yang memiliki energi ≥ Ea dan tumbukan menjadi lebih sering serta lebih efektif.</p>
+        </div>
+        <div class="factor-card">
+          <h4>🔵 Katalis</h4>
+          <p>Katalis menyediakan jalur reaksi alternatif dengan energi aktivasi yang lebih rendah, tanpa ikut berubah secara permanen di akhir reaksi.</p>
+        </div>
+      </div>
+      <p style="margin-top:18px;">Sebagai gambaran umum, aturan praktis (rule of thumb) menyatakan bahwa kenaikan suhu sebesar 10 °C dapat melipatgandakan laju reaksi untuk banyak reaksi — meskipun besarnya kelipatan ini berbeda-beda pada tiap reaksi dan hanya berlaku sebagai pendekatan.</p>
+    `
+  },
+  {
+    label:"Hukum Laju & Orde Reaksi",
+    html:`
+      <div class="sub">MATERI 4 DARI 5</div>
+      <h3>Hukum Laju Reaksi dan Orde Reaksi</h3>
+      <p>Untuk reaksi umum aA + bB → cC + dD, hubungan laju reaksi dengan konsentrasi pereaksi dinyatakan dalam <b>hukum laju reaksi</b>:</p>
+      <div class="formula-box">v = k [A]<sup>m</sup> [B]<sup>n</sup></div>
+      <p>dengan k = tetapan/konstanta laju reaksi, m = orde reaksi terhadap A, n = orde reaksi terhadap B, dan m + n = <b>orde reaksi total</b>.</p>
+      <div class="info-box"><b>Penting:</b> nilai m dan n <u>tidak selalu sama</u> dengan koefisien a dan b pada persamaan reaksi. Orde reaksi hanya dapat ditentukan dari <b>data hasil eksperimen</b>, bukan dari persamaan reaksi setara.</div>
+      <p>Cara menentukan orde reaksi dari data percobaan adalah dengan membandingkan dua data yang hanya berbeda pada satu konsentrasi zat, lalu melihat bagaimana perubahan konsentrasi tersebut memengaruhi laju:</p>
+      <ul>
+        <li>Jika konsentrasi dilipatkan 2× dan laju tidak berubah → orde 0.</li>
+        <li>Jika konsentrasi dilipatkan 2× dan laju juga menjadi 2× → orde 1.</li>
+        <li>Jika konsentrasi dilipatkan 2× dan laju menjadi 4× (2²) → orde 2.</li>
+      </ul>
+      <p>Orde reaksi total menunjukkan seberapa sensitif laju reaksi terhadap perubahan konsentrasi secara keseluruhan, dan digunakan pula untuk menentukan satuan tetapan laju k.</p>
+    `
+  },
+  {
+    label:"Penerapan dalam Kehidupan",
+    html:`
+      <div class="sub">MATERI 5 DARI 5</div>
+      <h3>Penerapan Laju Reaksi dalam Kehidupan Sehari-hari dan Industri</h3>
+      <p>Konsep laju reaksi bukan sekadar teori di dalam kelas — prinsip ini diterapkan secara luas, di antaranya:</p>
+      <ul>
+        <li><b>Pengawetan makanan</b>: menyimpan makanan pada suhu rendah (lemari es/pembeku) memperlambat reaksi pembusukan yang melibatkan mikroorganisme dan enzim.</li>
+        <li><b>Pematangan buah</b>: pemberian gas etilen mempercepat reaksi pematangan; sebaliknya, suhu rendah memperlambatnya.</li>
+        <li><b>Korosi (perkaratan)</b>: reaksi besi dengan oksigen dan air berlangsung lambat pada suhu ruang, namun dipercepat oleh kelembapan tinggi dan keberadaan elektrolit (misalnya air laut).</li>
+        <li><b>Industri amonia (proses Haber–Bosch)</b>: penggunaan katalis besi (Fe) mempercepat reaksi N₂ + H₂ menjadi NH₃ pada skala industri, menghemat waktu dan energi produksi.</li>
+        <li><b>Kembang api dan bahan bakar</b>: reaksi pembakaran berlangsung sangat cepat karena luas permukaan bahan yang halus dan suhu penyalaan yang tinggi.</li>
+        <li><b>Enzim dalam tubuh</b>: enzim bekerja sebagai katalis biologis yang mempercepat reaksi metabolisme pada suhu tubuh yang relatif rendah.</li>
+      </ul>
+      <p>Dengan memahami faktor-faktor yang memengaruhi laju reaksi, manusia dapat <b>mengendalikan</b> kecepatan suatu reaksi sesuai kebutuhan — baik untuk memperlambatnya (pengawetan) maupun mempercepatnya (produksi industri).</p>
+    `
+  }
+];
+let materiIdx = 0;
+function renderStepper(){
+  const s = document.getElementById('materi-stepper');
+  s.innerHTML = materi.map((m,i)=>`
+    <div class="materi-step ${i===materiIdx?'active':(i<materiIdx?'done':'')}" onclick="goMateri(${i})">
+      <div class="num">MATERI ${i+1}</div>
+      <div class="lbl">${m.label}</div>
+    </div>`).join('');
+}
+function goMateri(i, noScroll){
+  materiIdx = i;
+  renderStepper();
+  document.getElementById('materi-body').innerHTML = materi[i].html + `
+    <div class="materi-nav-buttons">
+      <button class="btn btn-outline" onclick="goMateri(${Math.max(0,i-1)})" ${i===0?'disabled':''}>← Materi Sebelumnya</button>
+      ${i===materi.length-1
+        ? `<button class="btn btn-solid" onclick="showPage('simulasi')">Lanjut ke Simulasi →</button>`
+        : `<button class="btn btn-solid" onclick="goMateri(${i+1})">Materi Selanjutnya →</button>`}
+    </div>`;
+  if(!noScroll) document.querySelector('#page-materi .wrap').scrollIntoView({behavior:'smooth'});
+}
+renderStepper(); goMateri(0, true);
+ 
+/* ===================== SIMULASI TABS ===================== */
+/* Simulasi & video dibuka lewat tautan langsung (tab baru). */
+ 
+/* ===================== LATIHAN SOAL ===================== */
+const latihan = [
+  { level:"SOLO · Unistructural", type:"single",
+    stimulus:null,
+    question:"Laju reaksi didefinisikan sebagai...",
+    options:[
+      "Banyaknya produk yang dihasilkan dalam suatu reaksi",
+      "Perubahan konsentrasi pereaksi atau produk tiap satuan waktu",
+      "Jumlah tumbukan antarpartikel pereaksi dalam suatu wadah",
+      "Energi minimum yang diperlukan agar reaksi berlangsung",
+      "Perbandingan mol pereaksi dengan mol produk"
+    ], correct:1,
+    ok:"Tepat sekali! Laju reaksi memang menyatakan seberapa cepat konsentrasi berubah tiap satuan waktu.",
+    bad:"Belum tepat.", pembahasan:"Laju reaksi (v) adalah perubahan konsentrasi pereaksi (berkurang) atau produk (bertambah) tiap satuan waktu: v = −Δ[R]/Δt = +Δ[P]/Δt."
+  },
+  { level:"SOLO · Multistructural", type:"complex",
+    stimulus:null,
+    question:"Pilih semua faktor berikut yang dapat MEMPERCEPAT laju reaksi!",
+    options:[
+      "Menaikkan suhu reaksi",
+      "Memperkecil ukuran partikel pereaksi (memperluas luas permukaan)",
+      "Menurunkan konsentrasi pereaksi",
+      "Menambahkan katalis yang sesuai",
+      "Menurunkan tekanan pada reaksi fase gas"
+    ], correct:[0,1,3],
+    ok:"Betul! Kamu berhasil memilih ketiga faktor yang tepat.",
+    bad:"Belum semua tepat.", pembahasan:"Menaikkan suhu, memperluas luas permukaan, dan menambah katalis mempercepat reaksi karena meningkatkan frekuensi/efektivitas tumbukan atau menurunkan Ea. Menurunkan konsentrasi maupun menurunkan tekanan gas justru memperlambat reaksi karena mengurangi frekuensi tumbukan."
+  },
+  { level:"SOLO · Relational", type:"single",
+    stimulus:`<svg viewBox="0 0 400 150" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:360px;display:block;margin:0 auto;">
+      <line x1="40" y1="120" x2="370" y2="120" stroke="#5B6B85" stroke-width="1.5"/>
+      <line x1="40" y1="120" x2="40" y2="15" stroke="#5B6B85" stroke-width="1.5"/>
+      <path d="M50 30 C 120 45, 180 100, 360 112" fill="none" stroke="#C23B3B" stroke-width="3"/>
+      <text x="200" y="140" font-size="11" fill="#5B6B85" text-anchor="middle" font-family="Inter">waktu (t)</text>
+      <text x="15" y="70" font-size="11" fill="#5B6B85" font-family="Inter" transform="rotate(-90 15 70)">[A]</text>
+    </svg><div style="text-align:center;font-size:12.5px;color:#5B6B85;margin-top:4px;">Grafik konsentrasi pereaksi A terhadap waktu</div>`,
+    question:"Berdasarkan grafik tersebut, bagaimana laju reaksi dari awal hingga akhir reaksi?",
+    options:[
+      "Laju reaksi tetap konstan sepanjang waktu",
+      "Laju reaksi semakin besar seiring bertambahnya waktu",
+      "Laju reaksi semakin kecil karena konsentrasi pereaksi terus berkurang",
+      "Laju reaksi tidak berkaitan dengan konsentrasi pereaksi",
+      "Laju reaksi hanya besar pada akhir reaksi"
+    ], correct:2,
+    ok:"Tepat! Kamu bisa menghubungkan bentuk kurva dengan perubahan laju reaksi.",
+    bad:"Belum tepat.", pembahasan:"Laju reaksi berbanding lurus dengan konsentrasi pereaksi yang tersisa. Karena [A] terus menurun (kurva melandai), laju reaksi juga semakin kecil seiring waktu."
+  },
+  { level:"SOLO · Relational", type:"category",
+    stimulus:"Teori tumbukan menjelaskan bahwa reaksi hanya terjadi jika partikel bertumbukan dengan orientasi yang tepat dan energi yang cukup. Tentukan Benar/Salah pernyataan berikut berdasarkan teori tersebut.",
+    labels:["Benar","Salah"],
+    statements:[
+      {text:"Setiap tumbukan antarpartikel pereaksi pasti menghasilkan reaksi.", correct:"Salah"},
+      {text:"Tumbukan efektif terjadi jika orientasi tepat dan energi ≥ energi aktivasi.", correct:"Benar"},
+      {text:"Energi aktivasi adalah energi minimum agar tumbukan menghasilkan reaksi.", correct:"Benar"},
+      {text:"Menurunkan suhu akan memperbesar jumlah tumbukan efektif.", correct:"Salah"}
+    ],
+    pembahasan:"Tidak semua tumbukan efektif — hanya yang memenuhi orientasi tepat dan energi ≥ Ea. Menurunkan suhu justru mengurangi energi kinetik partikel sehingga tumbukan efektif berkurang."
+  },
+  { level:"SOLO · Extended Abstract", type:"single",
+    stimulus:`<table><tr><th>Percobaan</th><th>[A] (M)</th><th>[B] (M)</th><th>v (M/s)</th></tr>
+      <tr><td>1</td><td>0,1</td><td>0,1</td><td>0,02</td></tr>
+      <tr><td>2</td><td>0,2</td><td>0,1</td><td>0,08</td></tr>
+      <tr><td>3</td><td>0,2</td><td>0,2</td><td>0,16</td></tr></table>`,
+    question:"Untuk reaksi A + B → C, berdasarkan data di atas, berapakah orde reaksi totalnya?",
+    options:["1","2","3","4","5"], correct:2,
+    ok:"Luar biasa! Kamu berhasil menentukan orde reaksi dari data eksperimen.",
+    bad:"Belum tepat, coba hitung lagi.", pembahasan:"Percobaan 1→2: [A] ×2, [B] tetap, v ×4 → orde A = 2. Percobaan 2→3: [B] ×2, [A] tetap, v ×2 → orde B = 1. Orde total = 2 + 1 = 3."
+  }
+];
+let latIdx = 0, latAnswered = new Array(latihan.length).fill(false);
+function renderLatihanProgress(){
+  document.getElementById('latihan-progress').innerHTML = latihan.map((_,i)=>
+    `<div class="q-dot ${i<latIdx?'done':(i===latIdx?'current':'')}"></div>`).join('');
+  document.getElementById('latihan-progress-label').textContent = (latIdx+1)+" / "+latihan.length;
+}
+function renderLatihan(){
+  renderLatihanProgress();
+  const q = latihan[latIdx];
+  let body = `<div class="q-card"><span class="q-level">${q.level}</span>`;
+  if(q.stimulus) body += `<div class="q-stimulus">${q.stimulus}</div>`;
+  body += `<div class="q-text">${q.question}</div>`;
+  if(q.type==="single"){
+    body += q.options.map((o,i)=>`<label class="opt" data-i="${i}"><input type="radio" name="lat" value="${i}">${o}</label>`).join('');
+  } else if(q.type==="complex"){
+    body += `<p style="font-size:12.5px;color:var(--muted);margin:-6px 0 12px;">*Jawaban benar bisa lebih dari satu.</p>`;
+    body += q.options.map((o,i)=>`<label class="opt" data-i="${i}"><input type="checkbox" value="${i}">${o}</label>`).join('');
+  } else if(q.type==="category"){
+    body += q.statements.map((s,i)=>`
+      <div class="cat-row"><span>${s.text}</span>
+        <select id="lat-cat-${i}">
+          <option value="">Pilih…</option>
+          ${q.labels.map(l=>`<option value="${l}">${l}</option>`).join('')}
+        </select>
+      </div>`).join('');
+  }
+  body += `<div class="feedback" id="lat-feedback"></div>`;
+  body += `<div class="q-actions">
+      <button class="btn btn-outline" onclick="latPrev()" ${latIdx===0?'disabled':''}>← Sebelumnya</button>
+      <button class="btn btn-solid" id="lat-check-btn" onclick="checkLatihan()">Periksa Jawaban</button>
+      <button class="btn btn-solid" id="lat-next-btn" style="display:none;" onclick="latNext()">${latIdx===latihan.length-1?'Selesai →':'Selanjutnya →'}</button>
+    </div></div>`;
+  document.getElementById('latihan-container').innerHTML = body;
+}
+function checkLatihan(){
+  const q = latihan[latIdx];
+  const fb = document.getElementById('lat-feedback');
+  let correct = false;
+  if(q.type==="single"){
+    const sel = document.querySelector('input[name="lat"]:checked');
+    if(!sel){ alert("Pilih salah satu jawaban terlebih dahulu."); return; }
+    const val = parseInt(sel.value);
+    correct = val===q.correct;
+    document.querySelectorAll('.opt').forEach((el,i)=>{
+      if(i===q.correct) el.classList.add('correct-mark');
+      else if(i===val && !correct) el.classList.add('wrong-mark');
+    });
+  } else if(q.type==="complex"){
+    const checks = [...document.querySelectorAll('#latihan-container input[type=checkbox]:checked')].map(c=>parseInt(c.value));
+    if(checks.length===0){ alert("Pilih minimal satu jawaban."); return; }
+    correct = checks.length===q.correct.length && checks.every(v=>q.correct.includes(v));
+    document.querySelectorAll('.opt').forEach((el,i)=>{
+      if(q.correct.includes(i)) el.classList.add('correct-mark');
+      else if(checks.includes(i)) el.classList.add('wrong-mark');
+    });
+  } else if(q.type==="category"){
+    let total=q.statements.length, right=0;
+    q.statements.forEach((s,i)=>{
+      const v = document.getElementById('lat-cat-'+i).value;
+      if(!v){ correct=false; }
+      if(v===s.correct) right++;
+    });
+    correct = right===total;
+    if(right<total && document.getElementById('lat-cat-0').value===""){ alert("Lengkapi semua kategori terlebih dahulu."); return; }
+  }
+  fb.className = "feedback show " + (correct?"ok":"bad");
+  fb.innerHTML = correct
+    ? `<b>👏 ${q.ok}</b>${q.pembahasan}`
+    : `<b>💪 ${q.bad} Yuk, cek pembahasannya:</b>${q.pembahasan}`;
+  document.getElementById('lat-check-btn').style.display='none';
+  document.getElementById('lat-next-btn').style.display='inline-flex';
+  latAnswered[latIdx]=true;
+}
+function latNext(){
+  if(latIdx<latihan.length-1){ latIdx++; renderLatihan(); }
+  else { showPage('asesmen'); }
+}
+function latPrev(){ if(latIdx>0){ latIdx--; renderLatihan(); } }
+renderLatihan();
+ 
+/* ===================== ASESMEN SUMATIF (15 soal) ===================== */
+const asesmen = [
+  // ---- LEVEL 1 (5) ----
+  {level:"L1", type:"single",
+   stimulus:"Perhatikan pernyataan berikut: <i>“Agar tumbukan antarpartikel menghasilkan reaksi, partikel harus memiliki energi minimum tertentu.”</i>",
+   question:"Istilah yang tepat untuk energi minimum tersebut adalah...",
+   options:["Energi kinetik","Energi potensial","Energi aktivasi","Energi ikatan","Energi termal"], correct:2,
+   pembahasan:"Energi minimum yang harus dimiliki partikel agar tumbukan menghasilkan reaksi disebut energi aktivasi (Ea)."},
+  {level:"L1", type:"single",
+   stimulus:"Seorang siswa mengukur perubahan konsentrasi HCl setiap 10 detik selama reaksi berlangsung.",
+   question:"Satuan yang tepat untuk menyatakan laju reaksi pada percobaan tersebut adalah...",
+   options:["mol","mol/L","mol L⁻¹ s⁻¹","L/mol","s/mol"], correct:2,
+   pembahasan:"Laju reaksi menyatakan perubahan konsentrasi (mol/L) tiap satuan waktu (s), sehingga satuannya mol L⁻¹ s⁻¹."},
+  {level:"L1", type:"complex",
+   stimulus:"Berikut beberapa peristiwa yang terjadi dalam kehidupan sehari-hari.",
+   question:"Pilih peristiwa yang menunjukkan reaksi berlangsung CEPAT!",
+   options:["Kembang api meledak","Pembentukan karat pada pagar besi","Kertas terbakar","Susu menjadi basi dalam kulkas","Ledakan gas LPG"], correct:[0,2,4],
+   pembahasan:"Kembang api meledak, kertas terbakar, dan ledakan gas LPG adalah reaksi cepat (berlangsung dalam hitungan detik). Perkaratan besi dan pembusukan susu dalam kulkas berlangsung lambat (hari–bulan)."},
+  {level:"L1", type:"category",
+   stimulus:"Perhatikan beberapa pernyataan tentang faktor-faktor laju reaksi berikut. Tentukan Tepat/Tidak Tepat untuk tiap pernyataan.",
+   labels:["Tepat","Tidak Tepat"],
+   statements:[
+     {text:"Semakin tinggi suhu, semakin cepat laju reaksi.", correct:"Tepat"},
+     {text:"Katalis ikut bereaksi dan jumlahnya berkurang di akhir reaksi.", correct:"Tidak Tepat"},
+     {text:"Serbuk zat padat bereaksi lebih cepat daripada bongkahan zat sejenis.", correct:"Tepat"},
+     {text:"Menurunkan konsentrasi pereaksi akan mempercepat reaksi.", correct:"Tidak Tepat"}
+   ],
+   pembahasan:"Katalis tidak ikut berkurang secara permanen di akhir reaksi (jumlahnya tetap). Menurunkan konsentrasi justru memperlambat, bukan mempercepat, reaksi."},
+  {level:"L1", type:"single",
+   stimulus:`<svg viewBox="0 0 380 150" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:340px;display:block;margin:0 auto;">
+      <line x1="30" y1="130" x2="360" y2="130" stroke="#5B6B85" stroke-width="1.5"/>
+      <path d="M40 100 Q 150 20, 220 20 Q 280 20, 340 80" fill="none" stroke="#1651D6" stroke-width="3"/>
+      <line x1="220" y1="20" x2="220" y2="100" stroke="#9A4B00" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <text x="228" y="65" font-size="11" fill="#9A4B00" font-family="Inter" font-weight="600">?</text>
+      <text x="45" y="118" font-size="10" fill="#25324A" font-family="Inter">Reaktan</text>
+      <text x="300" y="100" font-size="10" fill="#25324A" font-family="Inter">Produk</text>
+    </svg>`,
+   question:"Pada diagram energi potensial reaksi tersebut, tanda “?” yang diberi garis putus-putus menunjukkan besaran...",
+   options:["Energi ikatan produk","Perubahan entalpi reaksi (ΔH)","Energi aktivasi (Ea)","Energi kinetik rata-rata partikel","Energi potensial produk"], correct:2,
+   pembahasan:"Garis putus-putus menunjukkan selisih antara energi puncak kurva (keadaan transisi) dengan energi reaktan awal — inilah energi aktivasi (Ea)."},
+ 
+  // ---- LEVEL 2 (5) ----
+  {level:"L2", type:"single",
+   stimulus:"Seorang siswa mereaksikan keping pualam (CaCO₃) dengan larutan HCl 1 M, lalu mengulanginya dengan HCl 2 M pada suhu dan massa pualam yang sama.",
+   question:"Dibandingkan percobaan pertama, laju reaksi pada percobaan kedua akan...",
+   options:["Lebih lambat, karena partikel HCl semakin berdesakan","Lebih cepat, karena frekuensi tumbukan efektif meningkat","Sama saja, karena CaCO₃ berupa zat padat","Lebih lambat, karena Ea reaksi meningkat","Tidak dapat ditentukan tanpa data suhu"], correct:1,
+   pembahasan:"Menaikkan konsentrasi HCl memperbanyak partikel HCl per satuan volume, sehingga peluang tumbukan dengan permukaan CaCO₃ meningkat dan laju reaksi menjadi lebih cepat."},
+  {level:"L2", type:"complex",
+   stimulus:"Berdasarkan aturan praktis (rule of thumb), kenaikan suhu 10 °C dapat melipatgandakan (kira-kira 2×) laju banyak reaksi kimia.",
+   question:"Pilih pernyataan yang SESUAI dengan aturan tersebut!",
+   options:[
+     "Kenaikan suhu meningkatkan energi kinetik rata-rata partikel",
+     "Lebih banyak partikel yang memiliki energi ≥ Ea pada suhu lebih tinggi",
+     "Aturan ini berlaku sama persis untuk semua jenis reaksi tanpa kecuali",
+     "Kenaikan suhu meningkatkan frekuensi tumbukan antarpartikel",
+     "Kenaikan suhu mengubah orde reaksi menjadi lebih tinggi"
+   ], correct:[0,1,3],
+   pembahasan:"Kenaikan suhu meningkatkan energi kinetik dan frekuensi tumbukan, sehingga lebih banyak tumbukan yang efektif. Namun besar kelipatan berbeda-beda antar reaksi (bukan berlaku sama persis untuk semua reaksi), dan kenaikan suhu tidak mengubah orde reaksi — orde reaksi ditentukan oleh mekanisme reaksi, bukan suhu."},
+  {level:"L2", type:"category",
+   stimulus:"Sebuah keluarga menyimpan berbagai bahan makanan dengan cara berbeda. Kategorikan setiap tindakan berikut sebagai Mempercepat atau Memperlambat pembusukan makanan.",
+   labels:["Mempercepat","Memperlambat"],
+   statements:[
+     {text:"Menyimpan daging dalam freezer.", correct:"Memperlambat"},
+     {text:"Membiarkan buah potong di suhu ruang yang panas.", correct:"Mempercepat"},
+     {text:"Memotong sayur menjadi bagian kecil-kecil sebelum disimpan lama di suhu ruang.", correct:"Mempercepat"},
+     {text:"Menyimpan roti dalam wadah kedap udara di lemari es.", correct:"Memperlambat"}
+   ],
+   pembahasan:"Suhu rendah memperlambat reaksi pembusukan (memperkecil energi kinetik mikroba/enzim). Suhu tinggi dan luas permukaan yang lebih besar (potongan kecil) mempercepat kontak dengan oksigen/mikroorganisme sehingga mempercepat pembusukan."},
+  {level:"L2", type:"single",
+   stimulus:`<table><tr><th>[A] (M)</th><th>v (M/s)</th></tr><tr><td>0,10</td><td>0,010</td></tr><tr><td>0,20</td><td>0,020</td></tr><tr><td>0,40</td><td>0,040</td></tr></table>`,
+   question:"Untuk reaksi A → produk, berdasarkan data tersebut, orde reaksi terhadap A adalah...",
+   options:["0","1","2","3","1/2"], correct:1,
+   pembahasan:"Setiap [A] dilipatgandakan 2×, laju juga menjadi 2× (berbanding lurus) — ini adalah ciri reaksi orde 1 terhadap A."},
+  {level:"L2", type:"single",
+   stimulus:`<svg viewBox="0 0 380 150" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:340px;display:block;margin:0 auto;">
+      <line x1="30" y1="130" x2="360" y2="130" stroke="#5B6B85" stroke-width="1.5"/>
+      <path d="M40 100 Q 150 20, 220 20 Q 280 20, 340 80" fill="none" stroke="#1651D6" stroke-width="3"/>
+      <path d="M40 100 Q 130 60, 220 60 Q 260 60, 340 80" fill="none" stroke="#0E7A4E" stroke-width="3" stroke-dasharray="5 3"/>
+      <text x="345" y="70" font-size="10" fill="#1651D6" font-family="Inter">tanpa katalis</text>
+      <text x="345" y="100" font-size="10" fill="#0E7A4E" font-family="Inter">+ katalis</text>
+    </svg>`,
+   question:"Berdasarkan diagram energi potensial dua jalur reaksi tersebut, penambahan katalis menyebabkan...",
+   options:["Energi aktivasi meningkat sehingga reaksi melambat","Energi aktivasi menurun sehingga reaksi lebih cepat","Energi produk menjadi lebih rendah dari reaktan","Perubahan entalpi reaksi (ΔH) menjadi lebih besar","Tidak ada perubahan pada laju maupun energi reaksi"], correct:1,
+   pembahasan:"Kurva bergaris putus-putus (dengan katalis) memiliki puncak energi yang lebih rendah, artinya Ea menurun. Ea yang lebih rendah membuat lebih banyak partikel mampu bereaksi, sehingga laju reaksi meningkat."},
+ 
+  // ---- LEVEL 3 (5, HOTS) ----
+  {level:"L3", type:"single",
+   stimulus:"Dalam proses Haber–Bosch untuk memproduksi amonia (N₂ + 3H₂ ⇌ 2NH₃), industri menggunakan katalis besi (Fe) pada suhu dan tekanan tinggi.",
+   question:"Peran katalis Fe dalam proses tersebut adalah...",
+   options:[
+     "Menggeser posisi kesetimbangan ke arah produk agar hasil NH₃ meningkat",
+     "Meningkatkan energi aktivasi agar reaksi lebih terkendali",
+     "Mempercepat tercapainya kesetimbangan tanpa mengubah posisi kesetimbangan itu sendiri",
+     "Mengubah ΔH reaksi menjadi lebih negatif",
+     "Menggantikan kebutuhan suhu dan tekanan tinggi dalam proses tersebut"
+   ], correct:2,
+   pembahasan:"Katalis hanya mempercepat laju tercapainya kesetimbangan (menurunkan Ea reaksi maju dan balik secara setara) — ia tidak mengubah posisi kesetimbangan, komposisi hasil akhir, maupun nilai ΔH reaksi. Suhu dan tekanan tinggi tetap diperlukan untuk mengoptimalkan hasil kesetimbangan itu sendiri."},
+  {level:"L3", type:"complex",
+   stimulus:"Dua reaksi berbeda, P dan Q, dilangsungkan pada suhu yang sama. Reaksi P memiliki energi aktivasi lebih rendah daripada reaksi Q.",
+   question:"Pilih kesimpulan yang benar berdasarkan situasi tersebut!",
+   options:[
+     "Pada suhu yang sama, laju reaksi P umumnya lebih besar daripada reaksi Q",
+     "Reaksi P memiliki proporsi partikel dengan energi ≥ Ea yang lebih besar daripada reaksi Q",
+     "Menaikkan suhu tidak akan berpengaruh pada laju reaksi Q karena Ea-nya besar",
+     "Reaksi Q pasti tidak dapat berlangsung pada suhu berapa pun",
+     "Menaikkan suhu secara sama pada kedua reaksi tetap dapat mempercepat keduanya"
+   ], correct:[0,1,4],
+   pembahasan:"Ea yang lebih rendah (reaksi P) berarti lebih banyak partikel yang memiliki energi ≥ Ea pada suhu yang sama, sehingga laju P lebih besar. Menaikkan suhu tetap mempercepat kedua reaksi (menambah proporsi partikel berenergi cukup), termasuk reaksi Q — Q bisa berlangsung, hanya lebih lambat, bukan tidak mungkin sama sekali."},
+  {level:"L3", type:"category",
+   stimulus:`Data percobaan reaksi 2X + Y → Z sebagai berikut:<br><table><tr><th>Percobaan</th><th>[X] (M)</th><th>[Y] (M)</th><th>v (M/s)</th></tr>
+     <tr><td>1</td><td>0,10</td><td>0,10</td><td>0,004</td></tr>
+     <tr><td>2</td><td>0,20</td><td>0,10</td><td>0,004</td></tr>
+     <tr><td>3</td><td>0,20</td><td>0,20</td><td>0,016</td></tr></table>
+     Berdasarkan data tersebut, tentukan Benar/Salah untuk setiap kesimpulan berikut.`,
+   labels:["Benar","Salah"],
+   statements:[
+     {text:"Orde reaksi terhadap X adalah 0 (reaksi tidak dipengaruhi [X]).", correct:"Benar"},
+     {text:"Orde reaksi terhadap Y adalah 2.", correct:"Benar"},
+     {text:"Orde reaksi total dari reaksi ini adalah 2.", correct:"Benar"},
+     {text:"Persamaan laju reaksi yang sesuai adalah v = k[X]²[Y].", correct:"Salah"}
+   ],
+   pembahasan:"Percobaan 1→2: [X] ×2, [Y] tetap, v tetap → orde X = 0. Percobaan 2→3: [Y] ×2, [X] tetap, v ×4 (2²) → orde Y = 2. Orde total = 0 + 2 = 2. Karena orde X = 0, persamaan laju yang benar adalah v = k[Y]², bukan v = k[X]²[Y]."},
+  {level:"L3", type:"single",
+   stimulus:"Grafik laju suatu reaksi enzimatis menunjukkan laju reaksi meningkat tajam saat suhu dinaikkan dari 20 °C menuju 37 °C, namun laju justru turun drastis ketika suhu terus dinaikkan hingga 60 °C.",
+   question:"Penjelasan yang paling tepat untuk penurunan laju di atas suhu optimum tersebut adalah...",
+   options:[
+     "Energi aktivasi reaksi meningkat drastis di atas 37 °C",
+     "Konsentrasi substrat berkurang akibat kenaikan suhu",
+     "Struktur enzim mengalami denaturasi sehingga kehilangan fungsi katalitiknya",
+     "Tumbukan antarpartikel menjadi tidak lagi terjadi pada suhu tinggi",
+     "Reaksi berubah menjadi reaksi endoterm pada suhu tinggi"
+   ], correct:2,
+   pembahasan:"Enzim adalah katalis biologis berupa protein yang strukturnya dapat rusak (terdenaturasi) pada suhu terlalu tinggi. Begitu terdenaturasi, enzim kehilangan kemampuan katalitiknya sehingga laju reaksi turun drastis, meskipun secara umum kenaikan suhu seharusnya mempercepat reaksi."},
+  {level:"L3", type:"single",
+   stimulus:`Tabel hasil percobaan reaksi dekomposisi H₂O₂ dengan dan tanpa katalis MnO₂ pada suhu sama:<br>
+     <table><tr><th>Kondisi</th><th>Massa MnO₂</th><th>Waktu reaksi selesai</th></tr>
+     <tr><td>Tanpa katalis</td><td>-</td><td>480 s</td></tr>
+     <tr><td>+ katalis (serbuk halus)</td><td>1 gram</td><td>25 s</td></tr>
+     <tr><td>+ katalis (bongkahan)</td><td>1 gram</td><td>90 s</td></tr></table>`,
+   question:"Kesimpulan paling tepat yang dapat ditarik dari ketiga data percobaan tersebut adalah...",
+   options:[
+     "Katalis mempercepat reaksi, dan efeknya semakin besar jika luas permukaan katalis diperbesar",
+     "Katalis hanya berpengaruh jika digunakan dalam bentuk bongkahan",
+     "Massa katalis adalah satu-satunya faktor yang menentukan kecepatan reaksi",
+     "Bentuk katalis tidak berpengaruh selama massanya sama",
+     "Katalis memperlambat reaksi dibandingkan tanpa katalis"
+   ], correct:0,
+   pembahasan:"Kedua percobaan dengan katalis lebih cepat daripada tanpa katalis (membuktikan efek katalis), dan katalis serbuk (luas permukaan lebih besar) bekerja lebih cepat daripada bongkahan pada massa yang sama — menunjukkan luas permukaan katalis turut memperbesar efektivitasnya."}
+];
+ 
+let asesmenAnswers = new Array(asesmen.length).fill(null);
+ 
+function renderAsesmenForm(){
+  const wrap = document.getElementById('asesmen-items');
+  wrap.innerHTML = asesmen.map((q,i)=>{
+    let body = `<div class="as-item" id="as-item-${i}"><span class="q-level">${q.level} · Soal ${i+1}</span>`;
+    if(q.stimulus) body += `<div class="q-stimulus">${q.stimulus}</div>`;
+    body += `<div class="q-text">${q.question}</div>`;
+    if(q.type==="single"){
+      body += q.options.map((o,j)=>`<label class="opt"><input type="radio" name="as-${i}" value="${j}">${o}</label>`).join('');
+    } else if(q.type==="complex"){
+      body += `<p style="font-size:12.5px;color:var(--muted);margin:-6px 0 12px;">*Jawaban benar bisa lebih dari satu.</p>`;
+      body += q.options.map((o,j)=>`<label class="opt"><input type="checkbox" name="as-${i}" value="${j}">${o}</label>`).join('');
+    } else if(q.type==="category"){
+      body += q.statements.map((s,j)=>`
+        <div class="cat-row"><span>${s.text}</span>
+          <select id="as-${i}-cat-${j}">
+            <option value="">Pilih…</option>
+            ${q.labels.map(l=>`<option value="${l}">${l}</option>`).join('')}
+          </select>
+        </div>`).join('');
+    }
+    body += `<div class="as-result-badge" id="as-badge-${i}" style="display:none;"></div>`;
+    body += `<div class="feedback" id="as-fb-${i}"></div></div>`;
+    return body;
+  }).join('');
+}
+renderAsesmenForm();
+ 
+function toggleSekolahLain(inputId, selectEl){
+  const other = document.getElementById(inputId);
+  other.style.display = (selectEl.value==='Lain-lain') ? 'block' : 'none';
+  if(selectEl.value!=='Lain-lain') other.value='';
+}
+function getSekolahValue(selectId, otherId){
+  const sel = document.getElementById(selectId).value;
+  if(sel==='Lain-lain') return document.getElementById(otherId).value.trim();
+  return sel;
+}
+function startAsesmen(){
+  const nama = document.getElementById('inp-nama').value.trim();
+  const kelas = document.getElementById('inp-kelas').value;
+  const sekolah = getSekolahValue('inp-sekolah','inp-sekolah-lain');
+  if(!nama || !kelas || !sekolah){
+    document.getElementById('identity-warning').style.display='block';
+    return;
+  }
+  document.getElementById('identity-warning').style.display='none';
+  document.getElementById('identity-card').style.display='none';
+  document.getElementById('asesmen-form-wrap').style.display='block';
+}
+ 
+function gradeQuestion(q, i){
+  if(q.type==="single"){
+    const sel = document.querySelector(`input[name="as-${i}"]:checked`);
+    const val = sel? parseInt(sel.value): null;
+    return {score: (val===q.correct)?1:0, max:1, jawaban: sel? q.options[val] : "(tidak dijawab)"};
+  }
+  if(q.type==="complex"){
+    const checks = [...document.querySelectorAll(`input[name="as-${i}"]:checked`)].map(c=>parseInt(c.value));
+    const correct = checks.length===q.correct.length && checks.every(v=>q.correct.includes(v));
+    return {score: correct?1:0, max:1, jawaban: checks.length? checks.map(c=>q.options[c]).join(" | ") : "(tidak dijawab)"};
+  }
+  if(q.type==="category"){
+    let right=0, ans=[];
+    q.statements.forEach((s,j)=>{
+      const v = document.getElementById(`as-${i}-cat-${j}`).value;
+      ans.push(v||"-");
+      if(v===s.correct) right++;
+    });
+    return {score: right, max:q.statements.length, jawaban: ans.join(" | ")};
+  }
+}
+ 
+function submitAsesmen(){
+  let totalScore=0, totalMax=0;
+  let levelScore = {L1:0, L2:0, L3:0}, levelMax={L1:0,L2:0,L3:0};
+  let csvRows = [["No","Level","Tipe Soal","Jawaban Siswa","Skor","Skor Maksimal"]];
+ 
+  asesmen.forEach((q,i)=>{
+    const g = gradeQuestion(q,i);
+    totalScore += g.score; totalMax += g.max;
+    levelScore[q.level]+=g.score; levelMax[q.level]+=g.max;
+    const isFullyCorrect = g.score===g.max;
+    const badge = document.getElementById('as-badge-'+i);
+    badge.style.display='inline-flex';
+    badge.className = "as-result-badge "+(isFullyCorrect?"ok":"bad");
+    badge.textContent = isFullyCorrect ? "👍 Jawaban benar" : `Skor ${g.score}/${g.max}`;
+    const fb = document.getElementById('as-fb-'+i);
+    fb.className = "feedback show " + (isFullyCorrect?"ok":"bad");
+    fb.innerHTML = isFullyCorrect
+      ? `<b>👍 Kerja bagus!</b>${q.pembahasan}`
+      : `<b>💪 Tetap semangat, ini pembahasannya:</b>${q.pembahasan}`;
+    csvRows.push([i+1, q.level, q.type, g.jawaban.replace(/,/g,';'), g.score, g.max]);
+  });
+ 
+  document.getElementById('asesmen-items').querySelectorAll('input,select').forEach(el=>el.disabled=true);
+  document.querySelector('#asesmen-form-wrap > button').style.display='none';
+ 
+  const nama = document.getElementById('inp-nama').value.trim();
+  const kelas = document.getElementById('inp-kelas').value;
+  const sekolah = getSekolahValue('inp-sekolah','inp-sekolah-lain');
+  const persen = Math.round((totalScore/totalMax)*100);
+ 
+  const resultDiv = document.getElementById('asesmen-result');
+  resultDiv.style.display='block';
+  resultDiv.innerHTML = `
+    <div class="summary-card">
+      <p>Hasil Asesmen Sumatif</p>
+      <div class="score">${persen}</div>
+      <p>${nama} · Kelas ${kelas} · ${sekolah} · Skor ${totalScore.toFixed(1)} dari ${totalMax}</p>
+      <div class="level-breakdown">
+        <div><b>${levelScore.L1}/${levelMax.L1}</b><span>Level 1</span></div>
+        <div><b>${levelScore.L2}/${levelMax.L2}</b><span>Level 2</span></div>
+        <div><b>${levelScore.L3}/${levelMax.L3}</b><span>Level 3</span></div>
+      </div>
+    </div>
+    <div style="text-align:center; margin-top:20px;">
+      <button class="btn btn-solid" onclick="downloadCSV()">⬇ Unduh Hasil (CSV)</button>
+    </div>`;
+ 
+  window.__csvData = {nama, kelas, sekolah, persen, totalScore, totalMax, rows: csvRows};
+  resultDiv.scrollIntoView({behavior:'smooth'});
+}
+ 
+function downloadCSV(){
+  const d = window.__csvData;
+  if(!d) return;
+  let lines = [];
+  lines.push(["Nama","Kelas","Nama Sekolah","Tanggal","Skor Total","Skor Maksimal","Persentase"].join(","));
+  lines.push([d.nama, d.kelas, d.sekolah, new Date().toLocaleString('id-ID'), d.totalScore, d.totalMax, d.persen+"%"].join(","));
+  lines.push([]);
+  d.rows.forEach(r=>lines.push(r.join(",")));
+  const csvContent = lines.join("\n");
+  const blob = new Blob([csvContent], {type:"text/csv;charset=utf-8;"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `Asesmen_LajuReaksi_${d.nama.replace(/\s+/g,'_')}_${d.kelas.replace(/\s+/g,'_')}.csv`;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+ 
+/* ===================== REFLEKSI (papan bersama) =====================
+   Modul ini SIAP terhubung ke penyimpanan bersama gratis (kvdb.io) agar
+   isian refleksi bisa dilihat lintas perangkat oleh semua pengguna.
+   Cukup isi KVDB_BUCKET_ID di bawah ini dengan ID bucket kvdb.io milikmu.
+   Selama kolom ini masih kosong, papan refleksi berjalan dalam mode
+   LOKAL: hanya menampilkan isian pada sesi/perangkat yang sama, dan
+   setiap pengisi tetap bisa mengunduh rekap CSV untuk digabung guru. */
+const KVDB_BUCKET_ID = "";
+const REFLEKSI_KEY = "refleksi-laju-reaksi";
+const isRefleksiOnline = KVDB_BUCKET_ID.trim().length > 0;
+ 
+let refleksiData = [];
+ 
+function renderRefleksiList(){
+  const wrap = document.getElementById('refleksi-list');
+  if(!wrap) return;
+  if(refleksiData.length===0){
+    wrap.innerHTML = `<p style="color:var(--muted); font-size:14px; text-align:center; padding:20px 0;">Belum ada refleksi yang masuk. Jadilah yang pertama mengisi!</p>`;
+    return;
+  }
+  wrap.innerHTML = refleksiData.slice().reverse().map(r=>`
+    <div class="reflek-card">
+      <div class="reflek-head">
+        <div><b>${r.nama}</b><span>${r.kelas} · ${r.sekolah}</span></div>
+        <div class="reflek-star">${'★'.repeat(r.bintang)}${'☆'.repeat(5-r.bintang)}</div>
+      </div>
+      <p><b>Yang paling dipahami:</b> ${r.paham}</p>
+      <p><b>Yang masih membingungkan:</b> ${r.bingung}</p>
+      <p><b>Rencana belajar selanjutnya:</b> ${r.rencana}</p>
+      <div class="reflek-time">${r.waktu}</div>
+    </div>`).join('');
+}
+ 
+async function loadRefleksiShared(){
+  const badge = document.getElementById('refleksi-mode-badge');
+  if(badge) badge.textContent = isRefleksiOnline ? "🌐 Mode: semua pengguna" : "💻 Mode: perangkat/sesi ini saja";
+  if(!isRefleksiOnline){ renderRefleksiList(); return; }
+  const box = document.getElementById('refleksi-list');
+  if(box) box.innerHTML = `<p style="color:var(--muted); font-size:13.5px; text-align:center; padding:16px 0;">Memuat refleksi dari seluruh pengguna…</p>`;
+  try{
+    const res = await fetch(`https://kvdb.io/${KVDB_BUCKET_ID}/${REFLEKSI_KEY}`, {cache:"no-store"});
+    const text = res.ok ? await res.text() : "[]";
+    refleksiData = text ? JSON.parse(text) : [];
+  }catch(e){
+    refleksiData = [];
+  }
+  renderRefleksiList();
+}
+ 
+async function saveRefleksiShared(){
+  if(!isRefleksiOnline) return;
+  try{
+    await fetch(`https://kvdb.io/${KVDB_BUCKET_ID}/${REFLEKSI_KEY}`, {
+      method:"POST",
+      body: JSON.stringify(refleksiData)
+    });
+  }catch(e){ /* jika gagal, data tetap tampil pada sesi ini */ }
+}
+ 
+function downloadRefleksiCSV(entry){
+  const row = [entry.nama, entry.kelas, entry.sekolah, entry.bintang, entry.paham, entry.bingung, entry.rencana, entry.waktu]
+    .map(v=>String(v).replace(/,/g,';'));
+  const header = ["Nama","Kelas","Nama Sekolah","Bintang","Yang Dipahami","Yang Membingungkan","Rencana Belajar","Waktu"];
+  const csv = [header.join(","), row.join(",")].join("\n");
+  const blob = new Blob([csv], {type:"text/csv;charset=utf-8;"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `Refleksi_${entry.nama.replace(/\s+/g,'_')}.csv`;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+ 
+async function submitRefleksi(){
+  const nama = document.getElementById('ref-nama').value.trim();
+  const kelas = document.getElementById('ref-kelas').value;
+  const sekolah = getSekolahValue('ref-sekolah','ref-sekolah-lain');
+  const paham = document.getElementById('ref-paham').value.trim();
+  const bingung = document.getElementById('ref-bingung').value.trim();
+  const rencana = document.getElementById('ref-rencana').value.trim();
+  const bintang = parseInt(document.getElementById('ref-bintang').value);
+  const warn = document.getElementById('refleksi-warning');
+ 
+  if(!nama || !kelas || !sekolah || !paham || !bingung || !rencana){
+    warn.style.display='block';
+    return;
+  }
+  warn.style.display='none';
+ 
+  if(isRefleksiOnline) await loadRefleksiShared();
+  const entry = { nama, kelas, sekolah, paham, bingung, rencana, bintang, waktu: new Date().toLocaleString('id-ID') };
+  refleksiData.push(entry);
+  renderRefleksiList();
+  await saveRefleksiShared();
+  downloadRefleksiCSV(entry);
+ 
+  document.getElementById('ref-nama').value='';
+  document.getElementById('ref-kelas').value='';
+  document.getElementById('ref-sekolah').value='';
+  document.getElementById('ref-sekolah-lain').value='';
+  document.getElementById('ref-sekolah-lain').style.display='none';
+  document.getElementById('ref-paham').value='';
+  document.getElementById('ref-bingung').value='';
+  document.getElementById('ref-rencana').value='';
+  document.getElementById('ref-bintang').value='5';
+ 
+  const okMsg = document.getElementById('refleksi-success');
+  okMsg.style.display='block';
+  setTimeout(()=>{ okMsg.style.display='none'; }, 4000);
+  document.getElementById('refleksi-list').scrollIntoView({behavior:'smooth'});
+}
+ 
+loadRefleksiShared();
+</script>
+</body>
+</html>
+ 
+
+
+
+Claude finished the response
